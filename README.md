@@ -9,7 +9,7 @@ This project is a music search application that allows users to search for songs
 ## Prerequisites
 ------
 
-### Develoment Environment & Tools
+### Development Environment & Tools
 - Node.js & npm
 - Code Editor (e.g., Visual Studio Code)
 - Chrome/Firefox/Safari/Edge >= Latest 2 major versions
@@ -17,7 +17,7 @@ This project is a music search application that allows users to search for songs
 - API Testing Tool (e.g., Postman)
 - Environment Variables Management (e.g., dotenv)
 
-### Technical Proficiences (MERN Stack)
+### Technical Proficiencies (MERN Stack)
 - JavaScript (ES6+)
 - React.js
 - Node.js
@@ -37,14 +37,14 @@ Ports 3000 (frontend) and 5000 (backend) should be available for development and
 ## Getting Started
 ------
 
-In order to setup the project you will need to setup `.env` file. You can do this by making a copy of our `.env.dist` and naming it to `.env` and filling in the required values. Which will be all of your enviromental variables for the project. You can find the required values in the Spotify Developer Dashboard.
+In order to setup the project you will need to setup `.env` file. You can do this by making a copy of our `.env.dist` and naming it to `.env` and filling in the required values. Which will be all of your environmental variables for the project. You can find the required values in the Spotify Developer Dashboard.
 
-After that is completed, you will need to install the dependicies for both the frontend and backend. You can do this by running `npm install` in both the `client` and `server` directories. This installs your `node_modules` for both the frontend and backend. Here is the command to complete this step.
+After that is completed, you will need to install the dependencies for both the frontend and backend. You can do this by running `npm install` in both the `client` and `server` directories. This installs your `node_modules` for both the frontend and backend. Here is the command to complete this step.
 
 ```bash
 npm install
 ```
-After the dependicies are installed, you can start the development server for both the frontend and backend. You can do this by running `npm start` in both the `client` and `server` directories. This will start the development server for both the frontend and backend. Here is the command to complete this step.
+After the dependencies are installed, you can start the development server for both the frontend and backend. You can do this by running `npm start` in both the `client` and `server` directories. This will start the development server for both the frontend and backend. Here is the command to complete this step.
 
 ```bash
 cd client & npm start
@@ -57,7 +57,7 @@ This will start the development server for both the frontend and backend. The fr
 The links to the project are listed below:
 * [Client](http://localhost:3000)
 * [Server](http://localhost:5000)
-* [Spotify API meiddleware](http://localhost:5000/spotify/v1)
+* [Spotify API middleware](http://localhost:5000/spotify/v1)
 * [Endpoint to check the status of our application's JWT](http://localhost:5000/spotify/v1/status) 
 Returns true if a valid JWT exists, otherwise false.
 * [Endpoint request a new JWT from Spotify using the authentication workflow](http://localhost:5000/spotify/v1/login)
