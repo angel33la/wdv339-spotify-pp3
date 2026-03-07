@@ -32,15 +32,19 @@ initializeSocket(httpServer);
 
 app.use(cors());
 
+const hasValidPrefix = (value, prefixes) =>
+  typeof value === "string" &&
+  prefixes.some((prefix) => value.startsWith(prefix));
+
 const hasClerkKeys =
-  Boolean(process.env.CLERK_PUBLISHABLE_KEY) &&
-  Boolean(process.env.CLERK_SECRET_KEY);
+  hasValidPrefix(process.env.CLERK_PUBLISHABLE_KEY, ["pk_test_", "pk_live_"]) &&
+  hasValidPrefix(process.env.CLERK_SECRET_KEY, ["sk_test_", "sk_live_"]);
 
 if (hasClerkKeys) {
   app.use(clerkMiddleware());
 } else {
   console.warn(
-    "Clerk keys are missing. Running without Clerk middleware; protected routes will return 401.",
+    "Clerk keys are missing or invalid. Running without Clerk middleware; protected routes will return 401.",
   );
   app.use((req, _res, next) => {
     req.auth = {};
