@@ -32,7 +32,21 @@ initializeSocket(httpServer);
 
 app.use(cors());
 
-app.use(clerkMiddleware());
+const hasClerkKeys =
+  Boolean(process.env.CLERK_PUBLISHABLE_KEY) &&
+  Boolean(process.env.CLERK_SECRET_KEY);
+
+if (hasClerkKeys) {
+  app.use(clerkMiddleware());
+} else {
+  console.warn(
+    "Clerk keys are missing. Running without Clerk middleware; protected routes will return 401.",
+  );
+  app.use((req, _res, next) => {
+    req.auth = {};
+    next();
+  });
+}
 
 app.use(
   fileUpload({
@@ -51,14 +65,12 @@ app.use("/api/auth", authRoutes);
 app.use("/api/songs", songRoutes);
 app.use("/api/albums", albumRoutes);
 
-
-
 // Middleware to parse JSON bodies
 app.use(express.json());
 
 // Sample route
 app.get("/", (req, res) => {
-  res.send("Welcome to the Music Search App Backend!");
+  res.send("Welcome to the WDV339-SPOTIFY-PP3 APP Backend!");
 });
 
 // Start the server
