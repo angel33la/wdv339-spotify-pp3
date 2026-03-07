@@ -1,6 +1,6 @@
 import { Song } from "../models/song.model.js";
 import { Album } from "../models/album.model.js";
-import cloudinary from "../lib/cloudinary.js";
+import cloudinary from "../../config/cloudinary.js";
 
 // helper function for cloudinary uploads
 const uploadToCloudinary = async (file) => {
@@ -111,4 +111,29 @@ export const deleteAlbum = async (req, res, next) => {
 
 export const checkAdmin = async (req, res, next) => {
   res.status(200).json({ admin: true });
+};
+
+export const getAllAlbums = async (req, res, next) => {
+  try {
+    const albums = await Album.find().sort({ createdAt: -1 });
+    res.status(200).json(albums);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getAlbumById = async (req, res, next) => {
+  try {
+    const { albumId } = req.params;
+    const album = await Album.findById(albumId);
+
+    if (!album) {
+      return res.status(404).json({ message: "Album not found" });
+    }
+
+    const songs = await Song.find({ albumId }).sort({ createdAt: -1 });
+    res.status(200).json({ ...album.toObject(), songs });
+  } catch (error) {
+    next(error);
+  }
 };

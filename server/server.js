@@ -3,14 +3,24 @@ import dotenv from "dotenv";
 import { clerkMiddleware } from "@clerk/express";
 import fileUpload from "express-fileupload";
 import cors from "cors";
+import fs from "fs";
 import { createServer } from "http";
 import path from "path";
 import { fileURLToPath } from "url";
 
 import { initializeSocket } from "./config/socket.js";
 
+import { connectDB } from "./config/db.js";
+import userRoutes from "./src/routes/user.route.js";
+import adminRoutes from "./src/routes/admin.route.js";
+import authRoutes from "./src/routes/auth.route.js";
+import songRoutes from "./src/routes/song.route.js";
+import albumRoutes from "./src/routes/album.route.js";
+
 dotenv.config();
 const app = express();
+
+connectDB();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -34,6 +44,14 @@ app.use(
     },
   }),
 );
+
+app.use("/api/users", userRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/songs", songRoutes);
+app.use("/api/albums", albumRoutes);
+
+
 
 // Middleware to parse JSON bodies
 app.use(express.json());
