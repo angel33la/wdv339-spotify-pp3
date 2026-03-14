@@ -1,25 +1,11 @@
 import bcrypt from "bcryptjs";
 import { User } from "../models/user.model.js";
 
-export const signup = async (req, res) => {
-  try {
-    const { username, email, password } = req.body;
+import GOOGLE_AUTH_URL from "https://accounts.google.com/o/oauth2/v2/auth";
+import GOOGLE_TOKEN_URL from "https://oauth2.googleapis.com/token";
+import GOOGLE_USERINFO_URL from "https://www.googleapis.com/oauth2/v3/userinfo";
 
-    // Check if user exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser)
-      return res.status(400).json({ message: "User already exists" });
-
-    // Save new user (password is hashed by model middleware)
-    const newUser = new User({ username, email, password });
-    await newUser.save();
-
-    res.status(201).json({ message: "User registered" });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
+// login route - redirect to Google for authentication
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -38,6 +24,13 @@ export const login = async (req, res) => {
   }
 };
 
-export const authCallback = async (_req, res) => {
+// Google OAuth callback route
+export const callback = async (req, res) => {
   res.status(200).json({ message: "Auth callback route is active" });
+};
+
+
+// logout route - simply respond with success message (client will handle token deletion)
+export const logout = async (_req, res) => {
+  res.status(200).json({ message: "Logout successful" });
 };
