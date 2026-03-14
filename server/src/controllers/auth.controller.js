@@ -1,6 +1,5 @@
 import axios from "axios";
-import bcrypt from "bcryptjs";
-import { User } from "../models/user.model.js";
+import { User } from "../models/User.js";
 
 const GOOGLE_AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth";
 const GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token";
@@ -12,7 +11,7 @@ export const login = async (req, res) => {
     client_id: process.env.GOOGLE_CLIENT_ID,
     redirect_uri: process.env.GOOGLE_CALLBACK_URL,
     response_type: "code",
-    scope: "openid email profile",
+    scope: "email profile",
     access_type: "offline",
     prompt: "consent",
   });
@@ -27,13 +26,11 @@ export const callback = async (req, res) => {
   const { code, error } = req.query;
   console.log("Query params:", { code, error });
   if (!code) {
-    return res
-      .status(404)
-      .json({
-        message: "Error occurred during Google authentication",
-        success: false,
-        error,
-      });
+    return res.status(404).json({
+      message: "Error occurred during Google authentication",
+      success: false,
+      error,
+    });
   }
 
   // final handshake with Google to exchange code for tokens and get user info
@@ -41,7 +38,7 @@ export const callback = async (req, res) => {
     const tokenResponse = await axios.post(
       GOOGLE_TOKEN_URL,
       new URLSearchParams({
-        code: req.query.code,
+        code,
         client_id: process.env.GOOGLE_CLIENT_ID,
         client_secret: process.env.GOOGLE_CLIENT_SECRET,
         redirect_uri: process.env.GOOGLE_CALLBACK_URL,
@@ -59,60 +56,77 @@ export const callback = async (req, res) => {
     });
 
     console.log("User data", userInfoResponse.data);
-    // const { id, email, name, picture } = userInfoResponse.data;
-    return res
-      .status(200)
-      .json({ message: "Auth callback route is active", data: userInfoResponse.data });
+    const {
+      sub: googleId,
+      email,
+      given_name: givenName,
+      family_name: familyName,
+      picture,
+    } = userInfoResponse.data;
+    const displayName =
+      [givenName, familyName].filter(Boolean).join(" ") || email;
+
+    // Save user to mongodb (create new or update existing by googleId or email)
+    let user = await User.findOne({ $or: [{ googleId }, { email }] });
+
+    if (!user) {
+      user = new User();
+    }
+
+    user.googleId = googleId;
+    user.email = email;
+    user.username = displayName;
+    user.imageUrl = picture;
+    user.access_token = access_token;
+    user.expires_in = expires_in;
+    user.refresh_token = refresh_token;
+    await user.save();
+
+    return res.status(200).json({
+      message: "Auth callback route is active",
+      data: {
+        id: user._id,
+        googleId: user.googleId,
+        email: user.email,
+        username: user.username,
+        imageUrl: user.imageUrl,
+      },
+    });
   } catch (error) {
-    return res.status(404).json({
-      message: "Error occurred during Google authentication",
+    if (axios.isAxiosError(error)) {
+      const statusCode = error.response?.status || 500;
+      const googleError = error.response?.data?.error;
+      const googleErrorDescription = error.response?.data?.error_description;
+
+      console.error("Google OAuth callback failed", {
+        statusCode,
+        googleError,
+        googleErrorDescription,
+        responseData: error.response?.data,
+      });
+
+      return res.status(statusCode).json({
+        message: "Error occurred during Google authentication",
+        success: false,
+        error: googleError || error.message,
+        error_description: googleErrorDescription,
+      });
+    }
+
+    console.error("Unexpected OAuth callback error", {
+      name: error?.name,
+      message: error?.message,
+      code: error?.code,
+      keyPattern: error?.keyPattern,
+      keyValue: error?.keyValue,
+    });
+
+    return res.status(500).json({
+      message: "Unexpected server error during Google authentication",
       success: false,
       error: error.message,
     });
   }
-
-
-  /*  let user = await User.findOne({ googleId: id });
-
-    if (user) {
-      // updating existing user
-      user.email = email;
-      user.username = name;
-      user.imageUrl = picture;
-      user.access_token = access_token;
-      user.expires_in = expires_in;
-      user.refresh_token = refresh_token;
-      await user.save();
-    } else {
-      // creating new user
-      user = await User.create({
-        googleId: id,
-        email,
-        name,
-        imageUrl: picture,
-        access_token,
-        expires_in,
-        refresh_token,
-      });
-      await user.save();
-    }
-
-    console.log("Received callback with query:", req.query);
-    const { code, error } = req.query;
-
-    if (!code) {
-      return res
-        .status(404)
-        .json({
-          message: "Error occurred during Google authentication",
-          success: false,
-          error,
-        });
-    }
-    
-  
-};*/
-
 };
 
 // logout route - simply respond with success message (client will handle token deletion)

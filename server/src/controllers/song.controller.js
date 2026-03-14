@@ -1,4 +1,4 @@
-import { Song } from "../models/song.model.js";
+import { Song } from "../models/Song.js";
 
 const allSongs = async (req, res, next) => {
   try {
@@ -86,5 +86,3 @@ const deleteSong = async (req, res, next) => {
 };
 
 export { allSongs, getSong, createSong, editSong, deleteSong };
-
-

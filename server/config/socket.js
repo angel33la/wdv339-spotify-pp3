@@ -1,5 +1,5 @@
 import { Server } from "socket.io";
-import { Message } from "../src/models/message.model.js";
+import { Message } from "../src/models/Message.js";
 
 export const initializeSocket = (server) => {
   const io = new Server(server, {
