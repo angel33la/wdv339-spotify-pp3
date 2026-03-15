@@ -42,7 +42,7 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", maxWidth: "800px", padding: "20px" }}>
       <h1>Search Music</h1>
       <SearchBar onSearch={handleSearch} />
       {error ? <p>{error}</p> : null}

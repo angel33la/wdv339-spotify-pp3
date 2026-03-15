@@ -11,7 +11,7 @@ export default function SearchBar({ onSearch }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={{ handleSubmit }} style={{ className:"search-bar"}}>
       <input
         type="text"
         placeholder="Search artist or song"
