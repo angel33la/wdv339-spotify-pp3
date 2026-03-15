@@ -8,6 +8,8 @@ import "./config/passport.js";
 
 import { connectDB } from "./config/db.js";
 import authRoutes from "./src/routes/auth.route.js";
+import searchRoutes from "./src/routes/search.route.js";
+import playlistRoutes from "./src/routes/playlist.route.js";
 
 dotenv.config();
 const app = express();
@@ -30,6 +32,8 @@ app.use(cookieParser());
 app.use(passport.initialize());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/search", searchRoutes);
+app.use("/api/playlists", playlistRoutes);
 
 
 app.get("/", (req, res) => {
