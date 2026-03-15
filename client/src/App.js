@@ -3,7 +3,7 @@ import "./App.css";
 import axios from "axios";
 
 function App() {
-  const backendUrl = "http://localhost:5000/api/auth/";
+  const backendUrl = "http://localhost:5000/";
 
   const [message, setMessage] = useState("");
 
