@@ -6,6 +6,7 @@ const GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token";
 const GOOGLE_USERINFO_URL = "https://www.googleapis.com/oauth2/v3/userinfo";
 
 // login route - redirect to Google for authentication
+// http://localhost:5000/api/auth/login
 export const login = async (req, res) => {
   const params = new URLSearchParams({
     client_id: process.env.GOOGLE_CLIENT_ID,
@@ -57,6 +58,7 @@ export const callback = async (req, res) => {
 
     console.log("User data", userInfoResponse.data);
     const {
+      id,
       sub: googleId,
       email,
       given_name: givenName,
@@ -85,11 +87,17 @@ export const callback = async (req, res) => {
     return res.status(200).json({
       message: "Auth callback route is active",
       data: {
-        id: user._id,
         googleId: user.googleId,
         email: user.email,
         username: user.username,
         imageUrl: user.imageUrl,
+        access_token: user.access_token,
+        expires_in: user.expires_in,
+        refresh_token: user.refresh_token,
+        id: user._id,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+        __v: user.__v,
       },
     });
   } catch (error) {
