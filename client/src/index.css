@@ -1,6 +1,8 @@
 body {
   margin: 0;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  background-color: #1a143c;
+  color: #fff;
 }
 
 nav {
@@ -9,8 +11,8 @@ nav {
   align-items: center;
   gap: 12px;
   padding: 16px;
-  background: #8c52ff;
-  color: #fff;
+  color: #1a143c;
+  background: #fff;
 }
 
 a {
@@ -33,5 +35,7 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  
+  background-color: #1a143c;
+  color: #fff;
+
 }
