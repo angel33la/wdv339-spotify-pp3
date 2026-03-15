@@ -6,6 +6,18 @@ const GOOGLE_AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth";
 const GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token";
 const GOOGLE_USERINFO_URL = "https://www.googleapis.com/oauth2/v3/userinfo";
 const TOKEN_COOKIE_NAME = "token";
+const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:3000";
+
+const redirectToClient = (res, path, params = {}) => {
+  const url = new URL(path, CLIENT_URL);
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== "") {
+      url.searchParams.set(key, String(value));
+    }
+  });
+
+  return res.redirect(url.toString());
+};
 
 const hasGoogleOAuthConfig = () =>
   Boolean(
@@ -51,16 +63,13 @@ export const callback = async (req, res) => {
   const { code, error } = req.query;
 
   if (!hasGoogleOAuthConfig()) {
-    return res.status(500).json({
-      message: "Google OAuth is not configured",
-      success: false,
+    return redirectToClient(res, "/login", {
+      error: "Google OAuth is not configured",
     });
   }
 
   if (!code) {
-    return res.status(400).json({
-      message: "Error occurred during Google authentication",
-      success: false,
+    return redirectToClient(res, "/login", {
       error: error || "Missing authorization code",
     });
   }
@@ -114,35 +123,21 @@ export const callback = async (req, res) => {
     const token = generateToken(user);
     setAuthCookie(res, token);
 
-    return res.status(200).json({
-      message: "Google authentication successful",
-      success: true,
+    return redirectToClient(res, "/auth/success", {
       token,
-      user: {
-        id: user._id,
-        googleId: user.googleId,
-        email: user.email,
-        username: user.username,
-        imageUrl: user.imageUrl,
-      },
     });
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      const statusCode = error.response?.status || 500;
       const googleError = error.response?.data?.error;
       const googleErrorDescription = error.response?.data?.error_description;
 
-      return res.status(statusCode).json({
-        message: "Error occurred during Google authentication",
-        success: false,
+      return redirectToClient(res, "/login", {
         error: googleError || error.message,
-        error_description: googleErrorDescription,
+        reason: googleErrorDescription,
       });
     }
 
-    return res.status(500).json({
-      message: "Unexpected server error during Google authentication",
-      success: false,
+    return redirectToClient(res, "/login", {
       error: error.message,
     });
   }
