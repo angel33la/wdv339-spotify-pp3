@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAlbumById, getAllAlbums } from "../controllers/album.controller.js";
+import { getAlbumById, getAllAlbums } from "../controllers/playlist.controller.js";
 
 const router = Router();
 

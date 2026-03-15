@@ -1,27 +1,28 @@
-import { clerkClient } from "@clerk/express";
+import jwt from "jsonwebtoken";
+import { User } from "../models/User.js";
 
-export const protectRoute = async (req, res, next) => {
-  if (!req.auth?.userId) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
-  next();
-};
-
-export const requireAdmin = async (req, res, next) => {
+const authMiddleware = async (req, res, next) => {
   try {
-    if (!req.auth?.userId) {
-      return res.status(401).json({ message: "Unauthorized" });
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({ message: "Not authorized" });
     }
 
-    const currentUser = await clerkClient.users.getUser(req.auth.userId);
-    const isAdmin =
-      process.env.ADMIN_EMAIL === currentUser.primaryEmailAddress?.emailAddress;
-    if (!isAdmin) {
-      return res.status(403).json({ message: "Forbidden: Admins only" });
+    const token = authHeader.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await User.findById(decoded.id).select("-__v");
+
+    if (!user) {
+      return res.status(401).json({ message: "User not found" });
     }
+
+    req.user = user;
     next();
-  } catch (error) {
-    console.error("Error checking admin status:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+  } catch {
+    res.status(401).json({ message: "Invalid token" });
   }
 };
+
+export default authMiddleware;

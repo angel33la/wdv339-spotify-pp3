@@ -1,5 +1,5 @@
-import { Song } from "../models/Song.js";
-import { Album } from "../models/Album.js";
+import { Song } from "../models/Search.js";
+import { Album } from "../models/Playlist.js";
 import { v2 as cloudinary } from "cloudinary";
 
 // helper function for cloudinary uploads
