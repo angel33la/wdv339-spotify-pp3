@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { callback, login, logout } from "../controllers/auth.controller.js";
+import { callback, login, logout, me } from "../controllers/auth.controller.js";
+import { protectRoute } from "../middleware/auth.middleware.js";
 
 const router = Router();
 
@@ -8,5 +9,6 @@ router.get("/google", login);
 router.get("/callback", callback);
 router.get("/google/callback", callback);
 router.get("/logout", logout);
+router.get("/me", protectRoute, me);
 
 export default router;
