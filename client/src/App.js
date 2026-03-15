@@ -1,26 +1,49 @@
-import React, { useEffect, useState } from "react";
-import "./App.css";
-import axios from "axios";
+import { useContext } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthContext } from "./context/AuthContext";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import Navbar from "./components/layout/Navbar";
+import Login from "./pages/Login";
+import AuthSuccess from "./pages/AuthSuccess";
+import Home from "./pages/Home";
+import Playlists from "./pages/Playlists";
+import PlaylistDetails from "./pages/PlaylistDetails";
 
-function App() {
-  const backendUrl = "http://localhost:5000";
-
-  const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    axios
-      .get(backendUrl)
-      .then((res) => setMessage(res.data.message))
-      .catch((err) => console.error(err));
-  }, []);
+export default function App() {
+  const { user, token, logout } = useContext(AuthContext);
 
   return (
-    <div className="App">
-      <h1>Message from Backend</h1>
-      <h2>React + Node Connection test</h2>
-      <p>{message}</p>
-    </div>
+    <BrowserRouter>
+      {token && <Navbar user={user} onLogout={logout} />}
+
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/auth/success" element={<AuthSuccess />} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/playlists"
+          element={
+            <ProtectedRoute>
+              <Playlists />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/playlists/:id"
+          element={
+            <ProtectedRoute>
+              <PlaylistDetails />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
-
-export default App;
