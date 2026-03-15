@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function Navbar({ user, onLogout }) {
   return (
-    <nav style={{ color: "#ffffff" }}>
+    <nav>
       <div
         style={{
           display: "flex",
@@ -10,6 +10,7 @@ export default function Navbar({ user, onLogout }) {
           alignItems: "center",
           gap: "60px",
           fontSize: "2rem",
+          color: "#1a143c",
         }}
       >
         <img

@@ -72,7 +72,7 @@ export default function Playlists() {
         maxWidth: "100%",
       }}
     >
-      <h1 style={{ fontSize: "4rem", color: "#8c52ff" }}>Your Playlists</h1>
+      <h1 style={{ fontSize: "4rem", color: "#ffffff" }}>Your Playlists</h1>
       {error ? <p>{error}</p> : null}
       <CreatePlaylistForm onCreate={handleCreate} />
       {playlists.map((playlist) => (

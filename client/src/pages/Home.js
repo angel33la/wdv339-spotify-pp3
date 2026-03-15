@@ -53,7 +53,7 @@ export default function Home() {
         maxWidth: "100%",
       }}
     >
-      <h1 style={{ fontSize: "4rem", color: "#8c52ff" }}>Search Music</h1>
+      <h1 style={{ fontSize: "4rem", color: "#fff" }}>Search Music</h1>
       <SearchBar onSearch={handleSearch} />
       {error ? <p>{error}</p> : null}
       <VideoPlayer videoId={selectedSong?.videoId} />
