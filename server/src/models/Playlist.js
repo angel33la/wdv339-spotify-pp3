@@ -1,24 +1,42 @@
 import mongoose from "mongoose";
 
-const albumSchema = new mongoose.Schema(
+const songSchema = new mongoose.Schema(
   {
+    videoId: {
+      type: String,
+      required: true,
+    },
     title: {
       type: String,
       required: true,
     },
-    artist: {
+    channelTitle: {
+      type: String,
+      default: "",
+    },
+    thumbnail: {
+      type: String,
+      default: "",
+    },
+  },
+  { _id: false },
+);
+
+const playlistSchema = new mongoose.Schema(
+  {
+    name: {
       type: String,
       required: true,
+      trim: true,
     },
-    releaseDate: {
-      type: Number,
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
-    coverUrl: {
-      type: String,
-    },
-    songs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Song" }],
+    songs: [songSchema],
   },
   { timestamps: true },
 );
 
-export const Album = mongoose.model("Album", albumSchema);
+export default mongoose.model("Playlist", playlistSchema);

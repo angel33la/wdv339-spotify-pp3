@@ -1,17 +1,23 @@
-import { Router } from "express";
+import express from "express";
+import authMiddleware from "../middleware/auth.middleware.js";
 import {
   createPlaylist,
-  deletePlaylist,
-  getAllPlaylists,
+  getUserPlaylists,
   getPlaylistById,
+  addSongToPlaylist,
+  removeSongFromPlaylist,
+  deletePlaylist,
 } from "../controllers/playlist.controller.js";
-import { protectRoute, requireAdmin } from "../middleware/auth.middleware.js";
 
-const router = Router();
+const router = express.Router();
 
-router.get("/", getAllPlaylists);
-router.get("/:playlistId", getPlaylistById);
-router.post("/", protectRoute, requireAdmin, createPlaylist);
-router.delete("/:playlistId", protectRoute, requireAdmin, deletePlaylist);
+router.use(authMiddleware);
+
+router.get("/", getUserPlaylists);
+router.get("/:id", getPlaylistById);
+router.post("/", createPlaylist);
+router.post("/:id/songs", addSongToPlaylist);
+router.delete("/:id/songs/:songId", removeSongFromPlaylist);
+router.delete("/:id", deletePlaylist);
 
 export default router;

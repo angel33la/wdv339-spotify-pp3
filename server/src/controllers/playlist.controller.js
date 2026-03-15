@@ -1,71 +1,140 @@
-import { Song } from "../models/Search.js";
-import { Album } from "../models/Playlist.js";
+import Playlist from "../models/Playlist.js";
 
-export const getAllPlaylists = async (req, res, next) => {
+export const createPlaylist = async (req, res) => {
   try {
-    const playlists = await Album.find().sort({ createdAt: -1 });
-    res.status(200).json(playlists);
+    const { name } = req.body;
+
+    if (!name?.trim()) {
+      return res.status(400).json({ message: "Playlist name is required" });
+    }
+
+    const playlist = await Playlist.create({
+      name: name.trim(),
+      user: req.user._id,
+      songs: [],
+    });
+
+    res.status(201).json(playlist);
   } catch (error) {
-    next(error);
+    console.error("Create playlist error:", error.message);
+    res.status(500).json({ message: "Failed to create playlist" });
   }
 };
 
-export const getPlaylistById = async (req, res, next) => {
+export const getUserPlaylists = async (req, res) => {
   try {
-    const { playlistId } = req.params;
-    const playlist = await Album.findById(playlistId);
+    const playlists = await Playlist.find({ user: req.user._id }).sort({
+      createdAt: -1,
+    });
+
+    res.status(200).json(playlists);
+  } catch (error) {
+    console.error("Get playlists error:", error.message);
+    res.status(500).json({ message: "Failed to fetch playlists" });
+  }
+};
+
+export const getPlaylistById = async (req, res) => {
+  try {
+    const playlist = await Playlist.findOne({
+      _id: req.params.id,
+      user: req.user._id,
+    });
 
     if (!playlist) {
       return res.status(404).json({ message: "Playlist not found" });
     }
 
-    const songs = await Song.find({ albumId: playlistId }).sort({
-      createdAt: -1,
-    });
-
-    res.status(200).json({ ...playlist.toObject(), songs });
+    res.status(200).json(playlist);
   } catch (error) {
-    next(error);
+    console.error("Get playlist error:", error.message);
+    res.status(500).json({ message: "Failed to fetch playlist" });
   }
 };
 
-export const createPlaylist = async (req, res, next) => {
+export const addSongToPlaylist = async (req, res) => {
   try {
-    const { title, artist, releaseYear, coverUrl } = req.body;
+    const { videoId, title, channelTitle, thumbnail } = req.body;
 
-    const playlist = new Album({
+    if (!videoId || !title) {
+      return res
+        .status(400)
+        .json({ message: "videoId and title are required" });
+    }
+
+    const playlist = await Playlist.findOne({
+      _id: req.params.id,
+      user: req.user._id,
+    });
+
+    if (!playlist) {
+      return res.status(404).json({ message: "Playlist not found" });
+    }
+
+    const alreadyExists = playlist.songs.some(
+      (song) => song.videoId === videoId,
+    );
+
+    if (alreadyExists) {
+      return res
+        .status(400)
+        .json({ message: "Song already exists in playlist" });
+    }
+
+    playlist.songs.push({
+      videoId,
       title,
-      artist,
-      releaseDate: releaseYear,
-      coverUrl,
+      channelTitle,
+      thumbnail,
     });
 
     await playlist.save();
 
-    res.status(201).json(playlist);
+    res.status(200).json(playlist);
   } catch (error) {
-    console.log("Error in createPlaylist", error);
-    next(error);
+    console.error("Add song error:", error.message);
+    res.status(500).json({ message: "Failed to add song to playlist" });
   }
 };
 
-export const deletePlaylist = async (req, res, next) => {
+export const removeSongFromPlaylist = async (req, res) => {
   try {
-    const { playlistId, id } = req.params;
-    const targetId = playlistId || id;
+    const { songId } = req.params;
 
-    const playlist = await Album.findById(targetId);
+    const playlist = await Playlist.findOne({
+      _id: req.params.id,
+      user: req.user._id,
+    });
+
     if (!playlist) {
       return res.status(404).json({ message: "Playlist not found" });
     }
 
-    // Remove songs associated with this playlist/album id before deleting playlist.
-    await Song.deleteMany({ albumId: targetId });
-    await Album.findByIdAndDelete(targetId);
+    playlist.songs = playlist.songs.filter((song) => song.videoId !== songId);
 
-    res.status(200).json({ message: "Playlist deleted successfully" });
+    await playlist.save();
+
+    res.status(200).json(playlist);
   } catch (error) {
-    console.log("Error in deletePlaylist", error);
-    next(error);
+    console.error("Remove song error:", error.message);
+    res.status(500).json({ message: "Failed to remove song from playlist" });
+  }
+};
+
+export const deletePlaylist = async (req, res) => {
+  try {
+    const playlist = await Playlist.findOneAndDelete({
+      _id: req.params.id,
+      user: req.user._id,
+    });
+
+    if (!playlist) {
+      return res.status(404).json({ message: "Playlist not found" });
+    }
+
+    res.status(200).json({ message: "Playlist deleted" });
+  } catch (error) {
+    console.error("Delete playlist error:", error.message);
+    res.status(500).json({ message: "Failed to delete playlist" });
   }
 };
