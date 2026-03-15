@@ -17,6 +17,8 @@ const userSchema = new mongoose.Schema(
     access_token: String,
     expires_in: Number,
     refresh_token: String,
+    refreshTokenHash: String,
+    refreshTokenExpiresAt: Date,
   },
   { timestamps: true },
 );

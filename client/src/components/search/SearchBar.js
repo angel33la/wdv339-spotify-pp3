@@ -3,10 +3,11 @@ import { useState } from "react";
 export default function SearchBar({ onSearch }) {
   const [query, setQuery] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!query.trim()) return;
-    onSearch(query);
+
+    await onSearch(query);
   };
 
   return (

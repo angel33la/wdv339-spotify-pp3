@@ -11,6 +11,7 @@ export default function Home() {
   const [results, setResults] = useState([]);
   const [playlists, setPlaylists] = useState([]);
   const [selectedSong, setSelectedSong] = useState(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const loadPlaylists = async () => {
@@ -22,8 +23,18 @@ export default function Home() {
   }, [token]);
 
   const handleSearch = async (query) => {
-    const data = await searchSongs(query, token);
-    setResults(data);
+    try {
+      setError("");
+      const data = await searchSongs(query, token);
+      setResults(data);
+    } catch (err) {
+      const message =
+        err?.response?.data?.message ||
+        err?.response?.data?.detail ||
+        "Search failed. Please try again.";
+      setError(message);
+      setResults([]);
+    }
   };
 
   const handleAddSong = async (playlistId, song) => {
@@ -34,6 +45,7 @@ export default function Home() {
     <div>
       <h1>Search Music</h1>
       <SearchBar onSearch={handleSearch} />
+      {error ? <p>{error}</p> : null}
       <VideoPlayer videoId={selectedSong?.videoId} />
       <SearchResults
         results={results}
