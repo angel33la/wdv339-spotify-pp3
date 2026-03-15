@@ -16,22 +16,28 @@ if (GOOGLE_CLIENT_ID && GOOGLE_CLIENT_SECRET && GOOGLE_CALLBACK_URL) {
         clientSecret: GOOGLE_CLIENT_SECRET,
         callbackURL: GOOGLE_CALLBACK_URL,
       },
-      async (accessToken, refreshToken, profile, done) => {
+      async (_accessToken, _refreshToken, profile, done) => {
         try {
-          const existingUser = await User.findOne({ googleId: profile.id });
-
-          if (existingUser) {
-            return done(null, existingUser);
-          }
-
-          const newUser = await User.create({
-            googleId: profile.id,
-            name: profile.displayName,
-            email: profile.emails?.[0]?.value || "",
-            avatar: profile.photos?.[0]?.value || "",
+          const email = profile.emails?.[0]?.value || "";
+          let user = await User.findOne({
+            $or: [{ googleId: profile.id }, { email }],
           });
 
-          done(null, newUser);
+          if (!user) {
+            user = await User.create({
+              googleId: profile.id,
+              username: profile.displayName,
+              email,
+              imageUrl: profile.photos?.[0]?.value || "",
+            });
+          } else {
+            user.googleId = profile.id;
+            user.username = profile.displayName;
+            user.imageUrl = profile.photos?.[0]?.value || user.imageUrl;
+            await user.save();
+          }
+
+          done(null, user);
         } catch (error) {
           done(error, null);
         }
