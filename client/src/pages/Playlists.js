@@ -61,8 +61,18 @@ export default function Playlists() {
   }
 
   return (
-    <div>
-      <h1>Your Playlists</h1>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        margin: "0 auto",
+        gap: "80px",
+        maxWidth: "100%",
+      }}
+    >
+      <h1 style={{ fontSize: "4rem", color: "#8c52ff" }}>Your Playlists</h1>
       {error ? <p>{error}</p> : null}
       <CreatePlaylistForm onCreate={handleCreate} />
       {playlists.map((playlist) => (

@@ -11,14 +11,32 @@ export default function SearchBar({ onSearch }) {
   };
 
   return (
-    <form onSubmit={{ handleSubmit }} style={{ className:"search-bar"}}>
+    <form onSubmit={{ handleSubmit }} style={{ className: "search-bar" }}>
       <input
+        style={{
+          padding: "10px",
+          fontSize: "1rem",
+          width: "300px",
+          borderRadius: "5px 0 0 5px",
+        }}
         type="text"
         placeholder="Search artist or song"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      <button type="submit">Search</button>
+      <button
+        type="submit"
+        style={{
+          padding: "11px",
+          fontSize: "1rem",
+          width: "100px",
+          borderRadius: "0 5px 5px 0",
+          backgroundColor: "#8c52ff",
+          color: "#fff",
+        }}
+      >
+        Search
+      </button>
     </form>
   );
 }

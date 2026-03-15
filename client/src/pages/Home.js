@@ -42,8 +42,18 @@ export default function Home() {
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", maxWidth: "800px", padding: "20px" }}>
-      <h1>Search Music</h1>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        margin: "0 auto",
+        gap: "80px",
+        maxWidth: "100%",
+      }}
+    >
+      <h1 style={{ fontSize: "4rem", color: "#8c52ff" }}>Search Music</h1>
       <SearchBar onSearch={handleSearch} />
       {error ? <p>{error}</p> : null}
       <VideoPlayer videoId={selectedSong?.videoId} />
