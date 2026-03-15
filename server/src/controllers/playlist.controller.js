@@ -1,11 +1,10 @@
 import { Song } from "../models/Search.js";
 import { Album } from "../models/Playlist.js";
 
-
 export const getAllPlaylists = async (req, res, next) => {
   try {
-    const albums = await Album.find().sort({ createdAt: -1 });
-    res.status(200).json(albums);
+    const playlists = await Album.find().sort({ createdAt: -1 });
+    res.status(200).json(playlists);
   } catch (error) {
     next(error);
   }
@@ -14,17 +13,16 @@ export const getAllPlaylists = async (req, res, next) => {
 export const getPlaylistById = async (req, res, next) => {
   try {
     const { playlistId } = req.params;
-    const playlist = await new Promise((resolve, reject) => {
-      Album.findById(playlistId, (err, album) => {
-        if (err) reject(err);
-        else resolve(album);
-      });
-    });
-
+    const playlist = await Album.findById(playlistId);
 
     if (!playlist) {
       return res.status(404).json({ message: "Playlist not found" });
     }
+
+    const songs = await Song.find({ albumId: playlistId }).sort({
+      createdAt: -1,
+    });
+
     res.status(200).json({ ...playlist.toObject(), songs });
   } catch (error) {
     next(error);
@@ -33,13 +31,13 @@ export const getPlaylistById = async (req, res, next) => {
 
 export const createPlaylist = async (req, res, next) => {
   try {
-    const { title, artist, releaseYear } = req.body;
+    const { title, artist, releaseYear, coverUrl } = req.body;
 
-    const playlist = new Playlist({
+    const playlist = new Album({
       title,
       artist,
-      imageUrl,
-      releaseYear,
+      releaseDate: releaseYear,
+      coverUrl,
     });
 
     await playlist.save();
@@ -53,18 +51,17 @@ export const createPlaylist = async (req, res, next) => {
 
 export const deletePlaylist = async (req, res, next) => {
   try {
-    const { id } = req.params;
+    const { playlistId, id } = req.params;
+    const targetId = playlistId || id;
 
-    const playlist = await playlist.findById(id);
-
-    // if playlist belongs to an album, update the album's playlists array
-    if (playlist.albumId) {
-      await Album.findByIdAndUpdate(playlist.albumId, {
-        $pull: { playlists: playlist._id },
-      });
+    const playlist = await Album.findById(targetId);
+    if (!playlist) {
+      return res.status(404).json({ message: "Playlist not found" });
     }
 
-    await playlist.findByIdAndDelete(id);
+    // Remove songs associated with this playlist/album id before deleting playlist.
+    await Song.deleteMany({ albumId: targetId });
+    await Album.findByIdAndDelete(targetId);
 
     res.status(200).json({ message: "Playlist deleted successfully" });
   } catch (error) {
@@ -72,4 +69,3 @@ export const deletePlaylist = async (req, res, next) => {
     next(error);
   }
 };
-
