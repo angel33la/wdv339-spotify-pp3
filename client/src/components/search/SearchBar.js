@@ -13,12 +13,7 @@ export default function SearchBar({ onSearch }) {
   return (
     <form onSubmit={handleSubmit} className="search-bar">
       <input
-        style={{
-          padding: "11px",
-          fontSize: "1rem",
-          width: "300px",
-          borderRadius: "5px 0 0 5px",
-        }}
+        className="search-bar-input"
         type="text"
         placeholder="Search artist or song"
         value={query}
@@ -26,14 +21,7 @@ export default function SearchBar({ onSearch }) {
       />
       <button
         type="submit"
-        style={{
-          padding: "10px",
-          fontSize: "1.25rem",
-          width: "100px",
-          borderRadius: "0 5px 5px 0",
-          backgroundColor: "#fff",
-          color: "#1a143c",
-        }}
+        className="search-bar-button"
       >
         Search
       </button>

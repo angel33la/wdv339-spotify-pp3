@@ -42,21 +42,13 @@ export default function Home() {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        margin: "0 auto",
-        gap: "80px",
-        maxWidth: "100%",
-      }}
-    >
-      <h1 style={{ fontSize: "4rem", color: "#fff" }}>Search Music</h1>
+    <div className="home-page">
+      <h1 className="home-title">Search Music</h1>
       <SearchBar onSearch={handleSearch} />
-      {error ? <p>{error}</p> : null}
-      <VideoPlayer videoId={selectedSong?.videoId} />
+      {error ? <p className="home-error">{error}</p> : null}
+      <div className="player-wrap">
+        <VideoPlayer videoId={selectedSong?.videoId} />
+      </div>
       <SearchResults
         results={results}
         playlists={playlists}

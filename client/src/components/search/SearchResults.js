@@ -1,8 +1,10 @@
 import SearchResultCard from "./SearchResultCard";
 
 export default function SearchResults({ results, playlists, onPlay, onAdd }) {
+  if (!results.length) return null;
+
   return (
-    <div>
+    <div className="search-results-grid">
       {results.map((song) => (
         <SearchResultCard
           key={song.videoId}
