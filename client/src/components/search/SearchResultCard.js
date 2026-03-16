@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function SearchResultCard({ song, playlists, onPlay, onAdd }) {
+  const navigate = useNavigate();
   const [selectedPlaylistId, setSelectedPlaylistId] = useState(
     playlists[0]?._id || "",
   );
@@ -23,6 +25,11 @@ export default function SearchResultCard({ song, playlists, onPlay, onAdd }) {
   const handleAddSelected = () => {
     if (!selectedPlaylistId) return;
     onAdd(selectedPlaylistId, song);
+  };
+
+  const handleOpenSelected = () => {
+    if (!selectedPlaylistId) return;
+    navigate(`/playlists/${selectedPlaylistId}`);
   };
 
   return (
@@ -66,6 +73,14 @@ export default function SearchResultCard({ song, playlists, onPlay, onAdd }) {
             Add
           </button>
         </div>
+
+        <button
+          className="search-result-action search-result-open"
+          onClick={handleOpenSelected}
+          disabled={!selectedPlaylistId}
+        >
+          Open Playlist
+        </button>
       </div>
     </article>
   );

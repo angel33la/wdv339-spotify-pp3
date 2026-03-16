@@ -8,8 +8,33 @@ nav {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  flex-wrap: wrap;
   gap: 12px;
   padding: 16px;
+  color: #1a143c;
+  background: #fff;
+}
+
+.navbar-links,
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.navbar-links {
+  flex-wrap: wrap;
+  font-size: 2rem;
+}
+
+.navbar-playlist-select {
+  min-width: 220px;
+  max-width: 280px;
+  border: 1px solid #c8c2df;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 1rem;
   color: #1a143c;
   background: #fff;
 }
@@ -169,6 +194,12 @@ button {
   cursor: not-allowed;
 }
 
+.search-result-open {
+  background: #fff;
+  color: #1a143c;
+  border: 1px solid #1a143c;
+}
+
 .search-result-add-row {
   width: 100%;
   display: grid;
@@ -188,7 +219,72 @@ button {
   font-family: inherit;
 }
 
+.playlists-page {
+  width: min(1200px, 92vw);
+  margin: 0 auto;
+  padding: 32px 0 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+.playlists-title {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(2.3rem, 6vw, 4rem);
+}
+
+.playlists-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.playlist-card {
+  background: #fff;
+  border: 1px solid #d7d3e8;
+  border-radius: 14px;
+  padding: 20px;
+  color: #1a143c;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 10px 20px rgb(0 0 0 / 16%);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.playlist-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgb(0 0 0 / 20%);
+}
+
+.playlist-card h3,
+.playlist-card p {
+  margin: 0;
+}
+
+.playlist-card-open {
+  margin-top: auto;
+  font-size: 0.95rem;
+  font-weight: bold;
+}
+
 @media (max-width: 640px) {
+  .navbar-links,
+  .navbar-actions {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .navbar-playlist-select {
+    min-width: 0;
+    width: min(100%, 320px);
+  }
+
   .search-bar {
     flex-direction: column;
     gap: 10px;
