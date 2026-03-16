@@ -26,7 +26,7 @@ export default function Navbar({ user, onLogout }) {
         onClick={onLogout}
         style={{
           padding: "10px",
-          fontSize: "1rem",
+          fontSize: "1.25rem",
           width: "100px",
           borderRadius: "5px 5px 5px 5px",
         }}

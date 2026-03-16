@@ -32,8 +32,8 @@ export default function CreatePlaylistForm({ onCreate }) {
           fontSize: "1rem",
           width: "100px",
           borderRadius: "0 5px 5px 0",
-          backgroundColor: "#8c52ff",
-          color: "#fff",
+          backgroundColor: "#fff",
+          color: "#1a143c",
         }}
       >
         Create Playlist
