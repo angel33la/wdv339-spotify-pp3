@@ -28,9 +28,14 @@ export default function PlaylistDetails() {
   if (!playlist) return <p>Loading...</p>;
 
   return (
-    <div>
-      <h1>{playlist.name}</h1>
-      <VideoPlayer videoId={selectedSong?.videoId} />
+    <div className="playlist-details-page">
+      <div className="playlist-details-header">
+        <h1 className="playlists-title">{playlist.name}</h1>
+        <p className="playlist-details-count">{playlist.songs.length} videos</p>
+      </div>
+      <div className="player-wrap">
+        <VideoPlayer videoId={selectedSong?.videoId} />
+      </div>
       <SongList
         songs={playlist.songs}
         onPlay={setSelectedSong}
