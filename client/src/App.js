@@ -1,9 +1,11 @@
 import { useContext, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
+import { PlayerProvider } from "./context/PlayerContext";
 import { applyThemeFromPreferences } from "./utils/preferences";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import Navbar from "./components/layout/Navbar";
+import PersistentPlayer from "./components/player/PersistentPlayer";
 import Login from "./pages/Login";
 import AuthSuccess from "./pages/AuthSuccess";
 import Home from "./pages/Home";
@@ -20,53 +22,57 @@ export default function App() {
   }, []);
 
   return (
-    <BrowserRouter>
-      {token && <Navbar user={user} onLogout={logout} />}
+    <PlayerProvider>
+      <BrowserRouter>
+        {token && <Navbar user={user} onLogout={logout} />}
 
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/auth/success" element={<AuthSuccess />} />
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/playlists"
-          element={
-            <ProtectedRoute>
-              <Playlists />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/playlists/:id"
-          element={
-            <ProtectedRoute>
-              <PlaylistDetails />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/songs"
-          element={
-            <ProtectedRoute>
-              <Songs />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/preferences"
-          element={
-            <ProtectedRoute>
-              <Preferences />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/auth/success" element={<AuthSuccess />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/playlists"
+            element={
+              <ProtectedRoute>
+                <Playlists />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/playlists/:id"
+            element={
+              <ProtectedRoute>
+                <PlaylistDetails />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/songs"
+            element={
+              <ProtectedRoute>
+                <Songs />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/preferences"
+            element={
+              <ProtectedRoute>
+                <Preferences />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+
+        <PersistentPlayer />
+      </BrowserRouter>
+    </PlayerProvider>
   );
 }

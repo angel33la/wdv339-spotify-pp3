@@ -4,6 +4,7 @@ import { CloseOutlined } from "@ant-design/icons";
 import { searchSongs } from "../api/searchApi";
 import { addSongToPlaylist, getPlaylists } from "../api/playlistApi";
 import { AuthContext } from "../context/AuthContext";
+import { PlayerContext } from "../context/PlayerContext";
 import SearchBar from "../components/search/SearchBar";
 import SearchResults from "../components/search/SearchResults";
 import VideoPlayer from "../components/player/VideoPlayer";
@@ -55,10 +56,10 @@ const getSimilarityScore = (song, queuedSongs) => {
 
 export default function Home() {
   const { token } = useContext(AuthContext);
+  const { currentSong, setCurrentSong } = useContext(PlayerContext);
   const [messageApi, contextHolder] = message.useMessage();
   const [results, setResults] = useState([]);
   const [playlists, setPlaylists] = useState([]);
-  const [selectedSong, setSelectedSong] = useState(null);
   const [queuedSongs, setQueuedSongs] = useState([]);
   const [error, setError] = useState("");
 
@@ -167,25 +168,18 @@ export default function Home() {
             Now Playing
           </Typography.Title>
           <Typography.Text className="watch-now-playing-text">
-            {selectedSong?.title || "Select a song"}
+            {currentSong?.title || "Select a song"}
           </Typography.Text>
           <div className="watch-stage">
-            {selectedSong?.videoId ? (
+            {currentSong?.videoId ? (
               <div className="player-wrap watch-player-wrap">
-                <VideoPlayer videoId={selectedSong.videoId} />
+                <VideoPlayer videoId={currentSong.videoId} />
               </div>
             ) : (
-              <div className="watch-poster" aria-hidden="true">
-                <div className="watch-poster-glow" />
-                <div className="watch-poster-hood">
-                  <span className="watch-poster-eye watch-poster-eye-left" />
-                  <span className="watch-poster-eye watch-poster-eye-right" />
-                </div>
-                <div className="watch-poster-title-wrap">
-                  <Typography.Text className="watch-poster-title"></Typography.Text>
-                  <Typography.Text className="watch-poster-subtitle"></Typography.Text>
-                </div>
-                <div className="watch-poster-speaker" />
+              <div className="watch-empty-state">
+                <Typography.Text className="watch-empty-text">
+                  No video selected
+                </Typography.Text>
               </div>
             )}
           </div>
@@ -234,7 +228,7 @@ export default function Home() {
           <SearchResults
             results={rankedResults}
             playlists={playlists}
-            onPlay={setSelectedSong}
+            onPlay={setCurrentSong}
             onAdd={handleAddSong}
             onQueue={handleQueueSong}
             onSaveSong={handleSaveSong}

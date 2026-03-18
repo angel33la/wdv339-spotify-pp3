@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Popconfirm, Typography } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import VideoPlayer from "../components/player/VideoPlayer";
+import { PlayerContext } from "../context/PlayerContext";
 import {
   clearProfileSongs,
   loadProfileSongs,
@@ -9,30 +10,27 @@ import {
 } from "../utils/preferences";
 
 export default function Songs() {
+  const { currentSong, setCurrentSong } = useContext(PlayerContext);
   const [songs, setSongs] = useState([]);
-  const [selectedSong, setSelectedSong] = useState(null);
 
   useEffect(() => {
     const storedSongs = loadProfileSongs();
     setSongs(storedSongs);
-    if (storedSongs.length) {
-      setSelectedSong(storedSongs[0]);
-    }
   }, []);
 
   const handleRemoveSong = (videoId) => {
     const nextSongs = removeProfileSong(videoId);
     setSongs(nextSongs);
 
-    if (selectedSong?.videoId === videoId) {
-      setSelectedSong(nextSongs[0] || null);
+    if (currentSong?.videoId === videoId) {
+      setCurrentSong(nextSongs[0] || null);
     }
   };
 
   const handleClear = () => {
     clearProfileSongs();
     setSongs([]);
-    setSelectedSong(null);
+    setCurrentSong(null);
   };
 
   return (
@@ -62,10 +60,10 @@ export default function Songs() {
       <section className="playlist-content">
         <div className="playlist-player-section">
           <Typography.Title level={2} className="playlist-player-title">
-            {selectedSong?.title || "Select a saved song"}
+            {currentSong?.title || "Select a saved song"}
           </Typography.Title>
           <div className="playlist-mini-player">
-            <VideoPlayer videoId={selectedSong?.videoId} />
+            <VideoPlayer videoId={currentSong?.videoId} />
           </div>
         </div>
 
@@ -94,10 +92,7 @@ export default function Songs() {
                     {song.channelTitle}
                   </Typography.Text>
                   <div className="playlist-song-actions">
-                    <Button
-                      type="primary"
-                      onClick={() => setSelectedSong(song)}
-                    >
+                    <Button type="primary" onClick={() => setCurrentSong(song)}>
                       Play
                     </Button>
                     <Button

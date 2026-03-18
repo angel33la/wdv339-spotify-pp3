@@ -16,6 +16,7 @@ import {
   updatePlaylistName,
 } from "../api/playlistApi";
 import { AuthContext } from "../context/AuthContext";
+import { PlayerContext } from "../context/PlayerContext";
 import SongList from "../components/playlists/SongList";
 import VideoPlayer from "../components/player/VideoPlayer";
 
@@ -23,9 +24,9 @@ export default function PlaylistDetails() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { token } = useContext(AuthContext);
+  const { currentSong, setCurrentSong } = useContext(PlayerContext);
   const [messageApi, contextHolder] = message.useMessage();
   const [playlist, setPlaylist] = useState(null);
-  const [selectedSong, setSelectedSong] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [nameDraft, setNameDraft] = useState("");
   const [isSavingName, setIsSavingName] = useState(false);
@@ -182,10 +183,10 @@ export default function PlaylistDetails() {
       <section className="playlist-content">
         <div className="playlist-player-section">
           <Typography.Title level={2} className="playlist-player-title">
-            {selectedSong?.title || "Select a video to play"}
+            {currentSong?.title || "Select a video to play"}
           </Typography.Title>
           <div className="playlist-mini-player">
-            <VideoPlayer videoId={selectedSong?.videoId} />
+            <VideoPlayer videoId={currentSong?.videoId} />
           </div>
         </div>
 
@@ -195,7 +196,7 @@ export default function PlaylistDetails() {
           </Typography.Title>
           <SongList
             songs={playlist.songs}
-            onPlay={setSelectedSong}
+            onPlay={setCurrentSong}
             onRemove={isEditing ? handleRemove : undefined}
           />
         </div>
