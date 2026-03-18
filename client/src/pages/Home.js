@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { Typography } from "antd";
 import { searchSongs } from "../api/searchApi";
 import { addSongToPlaylist, getPlaylists } from "../api/playlistApi";
 import { AuthContext } from "../context/AuthContext";
@@ -43,9 +44,15 @@ export default function Home() {
 
   return (
     <div className="home-page">
-      <h1 className="home-title">Search Music</h1>
+      <Typography.Title level={1} className="home-title">
+        Search Music
+      </Typography.Title>
       <SearchBar onSearch={handleSearch} />
-      {error ? <p className="home-error">{error}</p> : null}
+      {error ? (
+        <Typography.Text type="danger" className="home-error">
+          {error}
+        </Typography.Text>
+      ) : null}
       <div className="player-wrap">
         <VideoPlayer videoId={selectedSong?.videoId} />
       </div>

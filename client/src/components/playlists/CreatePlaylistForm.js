@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Typography } from "antd";
 
 export default function CreatePlaylistForm({ onCreate }) {
   const [name, setName] = useState("");
@@ -20,7 +21,9 @@ export default function CreatePlaylistForm({ onCreate }) {
   return (
     <div className="create-playlist-container">
       <div className="create-playlist-card">
-        <h2 className="create-playlist-title">Create New Playlist</h2>
+        <Typography.Title level={2} className="create-playlist-title">
+          Create New Playlist
+        </Typography.Title>
         <form className="create-playlist-form" onSubmit={handleSubmit}>
           <input
             className="create-playlist-input"

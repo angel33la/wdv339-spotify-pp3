@@ -1,4 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from "react";
+import { Typography } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   getPlaylist,
@@ -61,7 +62,7 @@ export default function PlaylistDetails() {
     }
   };
 
-  if (!playlist) return <p>Loading...</p>;
+  if (!playlist) return <Typography.Text>Loading...</Typography.Text>;
 
   return (
     <div className="playlist-details-page">
@@ -90,10 +91,18 @@ export default function PlaylistDetails() {
             </button>
           </form>
         ) : (
-          <h1 className="playlists-title">{playlist.name}</h1>
+          <Typography.Title level={1} className="playlists-title">
+            {playlist.name}
+          </Typography.Title>
         )}
-        <p className="playlist-details-count">{playlist.songs.length} videos</p>
-        {error ? <p className="home-error">{error}</p> : null}
+        <Typography.Text type="secondary" className="playlist-details-count">
+          {playlist.songs.length} videos
+        </Typography.Text>
+        {error ? (
+          <Typography.Text type="danger" className="home-error">
+            {error}
+          </Typography.Text>
+        ) : null}
         <div className="playlist-details-toolbar">
           <button onClick={() => setIsEditing((prev) => !prev)}>
             {isEditing ? "Done Editing" : "Edit Playlist"}
@@ -109,16 +118,18 @@ export default function PlaylistDetails() {
 
       <section className="playlist-content">
         <div className="playlist-player-section">
-          <h2 className="playlist-player-title">
+          <Typography.Title level={2} className="playlist-player-title">
             {selectedSong?.title || "Select a video to play"}
-          </h2>
+          </Typography.Title>
           <div className="playlist-mini-player">
             <VideoPlayer videoId={selectedSong?.videoId} />
           </div>
         </div>
 
         <div className="playlist-songs-section">
-          <h2 className="playlist-songs-title">Songs in Playlist</h2>
+          <Typography.Title level={2} className="playlist-songs-title">
+            Songs in Playlist
+          </Typography.Title>
           <SongList
             songs={playlist.songs}
             onPlay={setSelectedSong}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Typography } from "antd";
 
 export default function SearchResultCard({ song, playlists, onPlay, onAdd }) {
   const navigate = useNavigate();
@@ -39,8 +40,10 @@ export default function SearchResultCard({ song, playlists, onPlay, onAdd }) {
         src={song.thumbnail}
         alt={song.title}
       />
-      <h3>{song.title}</h3>
-      <p>{song.channelTitle}</p>
+      <Typography.Title level={5} style={{ margin: "8px 0 0" }}>
+        {song.title}
+      </Typography.Title>
+      <Typography.Text type="secondary">{song.channelTitle}</Typography.Text>
 
       <div className="search-result-actions">
         <button className="search-result-action" onClick={() => onPlay(song)}>

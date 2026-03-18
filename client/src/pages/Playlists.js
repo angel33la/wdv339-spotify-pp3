@@ -1,4 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from "react";
+import { Typography } from "antd";
 import { createPlaylist, getPlaylists } from "../api/playlistApi";
 import { AuthContext } from "../context/AuthContext";
 import CreatePlaylistForm from "../components/playlists/CreatePlaylistForm";
@@ -62,8 +63,10 @@ export default function Playlists() {
 
   return (
     <div className="playlists-page">
-      <h1 className="playlists-title">Your Playlists</h1>
-      {error ? <p>{error}</p> : null}
+      <Typography.Title level={1} className="playlists-title">
+        Your Playlists
+      </Typography.Title>
+      {error ? <Typography.Text type="danger">{error}</Typography.Text> : null}
       <CreatePlaylistForm onCreate={handleCreate} />
       <div className="playlists-grid">
         {playlists.map((playlist) => (

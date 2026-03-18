@@ -83,8 +83,8 @@ const useGeekTheme = () => {
         token: {
           borderRadius: 0,
           lineWidth: 2,
-          colorPrimary: "#39ff14",
-          colorText: "#39ff14",
+          colorPrimary: "#00BCD4",
+          colorText: "#FFFFFF",
           controlHeightSM: 26,
           controlHeight: 34,
         },
@@ -101,52 +101,13 @@ const useGeekTheme = () => {
         },
       },
       button: {
-        classNames: ({ props }) => ({
-          root: clsx(
-            styles.buttonRoot,
-            props.variant === "solid" && styles.buttonRootSolid,
-            props.variant === "solid" &&
-              props.danger &&
-              styles.buttonRootSolidDanger,
-          ),
-        }),
+        classNames: {
+          root: clsx(styles.buttonRoot),
+        },
       },
-
       alert: {
-        className: styles.lightBorder,
-      },
-      colorPicker: {
         classNames: {
-          root: styles.lightBorder,
-          body: styles.colorPickerBody,
-        },
-        arrow: false,
-      },
-      select: {
-        classNames: {
-          root: styles.lightBorder,
-        },
-      },
-      input: {
-        classNames: {
-          root: styles.lightBorder,
-        },
-      },
-      inputNumber: {
-        classNames: {
-          root: styles.lightBorder,
-        },
-      },
-      tooltip: {
-        arrow: false,
-        classNames: {
-          root: styles.tooltipRoot,
-          container: styles.tooltipContainer,
-        },
-      },
-      progress: {
-        classNames: {
-          track: styles.progressTrack,
+          message: "alert-message",
         },
       },
     }),

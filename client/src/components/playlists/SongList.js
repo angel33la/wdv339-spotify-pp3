@@ -1,7 +1,11 @@
+import { Typography } from "antd";
+
 export default function SongList({ songs, onPlay, onRemove }) {
   if (!songs.length) {
     return (
-      <p className="playlist-empty-state">No videos in this playlist yet.</p>
+      <Typography.Paragraph className="playlist-empty-state">
+        No videos in this playlist yet.
+      </Typography.Paragraph>
     );
   }
 
@@ -14,8 +18,12 @@ export default function SongList({ songs, onPlay, onRemove }) {
             src={song.thumbnail}
             alt={song.title}
           />
-          <h3>{song.title}</h3>
-          <p>{song.channelTitle}</p>
+          <Typography.Title level={5} style={{ margin: "4px 0 0" }}>
+            {song.title}
+          </Typography.Title>
+          <Typography.Text type="secondary">
+            {song.channelTitle}
+          </Typography.Text>
           <div className="playlist-song-actions">
             <button
               className="search-result-action"

@@ -1,5 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Button, Select, Space, Typography } from "antd";
+import {
+  CustomerServiceOutlined,
+  HomeOutlined,
+  LogoutOutlined,
+  ProfileOutlined,
+} from "@ant-design/icons";
 import { getPlaylists } from "../../api/playlistApi";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -39,8 +46,7 @@ export default function Navbar({ user, onLogout }) {
     setSelectedPlaylistId("");
   }, [location.pathname]);
 
-  const handlePlaylistSelect = (event) => {
-    const playlistId = event.target.value;
+  const handlePlaylistSelect = (playlistId) => {
     setSelectedPlaylistId(playlistId);
 
     if (playlistId) {
@@ -56,38 +62,39 @@ export default function Navbar({ user, onLogout }) {
           alt="App Logo"
           style={{ width: "40px", height: "40px" }}
         />
-        <Link to="/">Home</Link>
-        <Link to="/playlists">Playlists</Link>
-        <select
+        <Link to="/">
+          <Space size={6}>
+            <HomeOutlined />
+            <Typography.Text>Home</Typography.Text>
+          </Space>
+        </Link>
+        <Link to="/playlists">
+          <Space size={6}>
+            <CustomerServiceOutlined />
+            <Typography.Text>Playlists</Typography.Text>
+          </Space>
+        </Link>
+        <Select
           className="navbar-playlist-select"
           value={selectedPlaylistId}
           onChange={handlePlaylistSelect}
           disabled={!playlists.length}
+          placeholder={playlists.length ? "Open a playlist" : "No playlists yet"}
+          options={playlists.map((playlist) => ({
+            value: playlist._id,
+            label: playlist.name,
+          }))}
           aria-label="Open a playlist"
-        >
-          <option value="">
-            {playlists.length ? "Open a playlist" : "No playlists yet"}
-          </option>
-          {playlists.map((playlist) => (
-            <option key={playlist._id} value={playlist._id}>
-              {playlist.name}
-            </option>
-          ))}
-        </select>
+        />
       </div>
       <div className="navbar-actions">
-        <span>{user?.name}</span>
-        <button
-          onClick={onLogout}
-          style={{
-            padding: "10px",
-            fontSize: "1.25rem",
-            width: "100px",
-            borderRadius: "5px 5px 5px 5px",
-          }}
-        >
+        <Space size={8}>
+          <ProfileOutlined />
+          <Typography.Text>{user?.name}</Typography.Text>
+        </Space>
+        <Button type="primary" icon={<LogoutOutlined />} onClick={onLogout}>
           Logout
-        </button>
+        </Button>
       </div>
     </nav>
   );

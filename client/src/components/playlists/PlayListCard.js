@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Typography } from "antd";
 
 export default function PlaylistCard({ playlist }) {
   return (
@@ -7,9 +8,15 @@ export default function PlaylistCard({ playlist }) {
       to={`/playlists/${playlist._id}`}
       aria-label={`Open ${playlist.name} playlist`}
     >
-      <h3>{playlist.name}</h3>
-      <p>{playlist.songs.length} songs</p>
-      <span className="playlist-card-open">Open playlist</span>
+      <Typography.Title level={5} style={{ margin: 0 }}>
+        {playlist.name}
+      </Typography.Title>
+      <Typography.Text type="secondary">
+        {playlist.songs.length} songs
+      </Typography.Text>
+      <Typography.Text className="playlist-card-open">
+        Open playlist
+      </Typography.Text>
     </Link>
   );
 }
