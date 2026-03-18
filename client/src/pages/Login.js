@@ -15,6 +15,15 @@ export default function Login() {
         padding: "0",
       }}
     >
+      <img
+        src="/favicon.png"
+        alt="Music Matie logo"
+        style={{
+          width: "120px",
+          height: "120px",
+          objectFit: "contain",
+        }}
+      />
       <Typography.Title level={1} className="home-title">
         Music Matie App
       </Typography.Title>
