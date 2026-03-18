@@ -1,7 +1,8 @@
 body {
   margin: 0;
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-  background-color: #1a143c;
+  background-color: var(--color-bg-base);
+  color: var(--color-text);
 }
 
 nav {
@@ -11,8 +12,9 @@ nav {
   flex-wrap: wrap;
   gap: 12px;
   padding: 16px;
-  color: #1a143c;
-  background: #fff;
+  color: var(--color-text);
+  background: var(--color-bg-container);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .navbar-links,
@@ -30,29 +32,60 @@ nav {
 .navbar-playlist-select {
   min-width: 220px;
   max-width: 280px;
-  border: 1px solid #c8c2df;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 10px 12px;
   font-family: inherit;
   font-size: 1rem;
-  color: #1a143c;
-  background: #fff;
+  color: var(--color-text);
+  background: var(--color-bg-elevated);
 }
 
 a {
   color: inherit;
   text-decoration: none;
-  color: #1a143c;
+  color: var(--color-text);
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--color-info);
+}
+
+a:focus-visible {
+  outline: none;
+  border-radius: 6px;
+  box-shadow: var(--focus-ring);
 }
 
 button {
   margin: 6px;
   cursor: pointer;
-  background: #1a143c;
-  color: #fff;
+  background: var(--color-primary);
+  color: var(--color-bg-base);
   border: none;
   padding: 8px 16px;
   font-weight: bold;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+
+button:hover {
+  background: var(--color-primary-hover);
+  box-shadow: var(--shadow-neon);
+}
+
+button:active {
+  background: var(--color-primary-active);
+  transform: translateY(1px);
+}
+
+button:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
 }
 
 .home-page {
@@ -66,14 +99,14 @@ button {
 
 .home-title {
   margin: 0;
-  color: #fff;
+  color: var(--color-text);
   font-size: clamp(2.3rem, 6vw, 4rem);
   letter-spacing: 0.02em;
 }
 
 .home-error {
   margin: 4px 0;
-  color: #ffd6e2;
+  color: var(--color-error);
   font-size: 1rem;
 }
 
@@ -89,17 +122,44 @@ button {
   padding: 12px;
   font-size: 1rem;
   border-radius: 10px 0 0 10px;
-  border: 1px solid #3f347a;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-elevated);
+  color: var(--color-text);
   outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.search-bar-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.search-bar-input:hover {
+  border-color: var(--color-info);
+}
+
+.search-bar-input:focus-visible {
+  border-color: var(--color-info);
+  box-shadow: var(--focus-ring);
 }
 
 .search-bar-button {
   width: 130px;
   margin: 0;
   border-radius: 0 10px 10px 0;
-  background: #fff;
-  color: #1a143c;
+  background: var(--color-info);
+  color: var(--color-bg-base);
   font-size: 1rem;
+}
+
+.search-bar-button:hover {
+  background: var(--color-info-hover);
+}
+
+.search-bar-button:active {
+  background: var(--color-info-active);
 }
 
 .player-wrap {
@@ -114,7 +174,7 @@ button {
   height: auto;
   border: 0;
   border-radius: 14px;
-  box-shadow: 0 12px 24px rgb(0 0 0 / 30%);
+  box-shadow: var(--shadow-neon);
 }
 
 .search-results-grid {
@@ -126,17 +186,27 @@ button {
 }
 
 .search-result-card {
-  background: #fff;
-  border: 1px solid #d7d3e8;
+  background: var(--color-bg-container);
+  border: 1px solid var(--color-border);
   border-radius: 14px;
   padding: 18px;
-  color: #1a143c;
+  color: var(--color-text);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
   height: 100%;
-  box-shadow: 0 10px 20px rgb(0 0 0 / 16%);
+  box-shadow: var(--shadow-neon);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.search-result-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-info);
+  box-shadow: var(--shadow-neon-strong);
 }
 
 .search-result-card h3 {
@@ -153,7 +223,8 @@ button {
 
 .search-result-card p {
   margin: 0;
-  opacity: 0.75;
+  color: var(--color-text-secondary);
+  opacity: 1;
   font-size: 0.95rem;
   min-height: 1.3em;
   line-clamp: 1;
@@ -183,21 +254,40 @@ button {
   width: 100%;
   margin: 0;
   border-radius: 8px;
-  background: #1a143c;
-  color: #fff;
+  background: var(--color-primary);
+  color: var(--color-bg-base);
   padding: 10px 12px;
   font-size: 0.95rem;
 }
 
 .search-result-action:disabled {
-  opacity: 0.6;
+  background: #4a4a4a;
+  color: rgba(255, 255, 255, 0.9);
+  opacity: 1;
   cursor: not-allowed;
 }
 
+.search-result-action:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
 .search-result-open {
-  background: #fff;
-  color: #1a143c;
-  border: 1px solid #1a143c;
+  background: transparent;
+  color: var(--color-info);
+  border: 1px solid var(--color-info);
+}
+
+.search-result-open:hover {
+  background: rgba(0, 229, 255, 0.12);
+  color: var(--color-info-hover);
+  border-color: var(--color-info-hover);
+}
+
+.search-result-open:active {
+  background: rgba(0, 229, 255, 0.2);
+  color: var(--color-info-active);
+  border-color: var(--color-info-active);
 }
 
 .search-result-add-row {
@@ -211,12 +301,26 @@ button {
 .search-result-select {
   width: 100%;
   min-width: 0;
-  border: 1px solid #c8c2df;
-  background: #fff;
-  color: #1a143c;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-elevated);
+  color: var(--color-text);
   border-radius: 8px;
   padding: 10px;
   font-family: inherit;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.search-result-select:hover {
+  border-color: var(--color-info);
+}
+
+.search-result-select:focus-visible {
+  outline: none;
+  border-color: var(--color-info);
+  box-shadow: var(--focus-ring);
 }
 
 .playlists-page {
@@ -231,7 +335,7 @@ button {
 
 .playlists-title {
   margin: 0;
-  color: #fff;
+  color: var(--color-text);
   font-size: clamp(2.3rem, 6vw, 4rem);
 }
 
@@ -261,7 +365,7 @@ button {
 
 .playlist-details-count {
   margin: 0;
-  color: #d7d3e8;
+  color: var(--color-text-secondary);
   font-size: 1.1rem;
 }
 
@@ -274,17 +378,27 @@ button {
 }
 
 .playlist-song-card {
-  background: #fff;
-  border: 1px solid #d7d3e8;
+  background: var(--color-bg-container);
+  border: 1px solid var(--color-border);
   border-radius: 14px;
   padding: 18px;
-  color: #1a143c;
+  color: var(--color-text);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
   min-height: 100%;
-  box-shadow: 0 10px 20px rgb(0 0 0 / 16%);
+  box-shadow: var(--shadow-neon);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.playlist-song-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-info);
+  box-shadow: var(--shadow-neon-strong);
 }
 
 .playlist-song-card h3 {
@@ -301,7 +415,8 @@ button {
 
 .playlist-song-card p {
   margin: 0;
-  opacity: 0.75;
+  color: var(--color-text-secondary);
+  opacity: 1;
   font-size: 0.95rem;
   min-height: 1.3em;
   line-clamp: 1;
@@ -329,20 +444,20 @@ button {
 
 .playlist-empty-state {
   margin: 0;
-  color: #fff;
+  color: var(--color-text-secondary);
   font-size: 1.1rem;
 }
 
 .playlist-card {
-  background: #fff;
-  border: 1px solid #d7d3e8;
+  background: var(--color-bg-container);
+  border: 1px solid var(--color-border);
   border-radius: 14px;
   padding: 20px;
-  color: #1a143c;
+  color: var(--color-text);
   display: flex;
   flex-direction: column;
   gap: 10px;
-  box-shadow: 0 10px 20px rgb(0 0 0 / 16%);
+  box-shadow: var(--shadow-neon);
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
@@ -350,7 +465,25 @@ button {
 
 .playlist-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 28px rgb(0 0 0 / 20%);
+  border-color: var(--color-info);
+  box-shadow: var(--shadow-neon-strong);
+}
+
+.navbar-playlist-select {
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.navbar-playlist-select:hover {
+  border-color: var(--color-info);
+}
+
+.navbar-playlist-select:focus-visible {
+  outline: none;
+  border-color: var(--color-info);
+  box-shadow: var(--focus-ring);
 }
 
 .playlist-card h3,
