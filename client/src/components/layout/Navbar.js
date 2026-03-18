@@ -79,7 +79,9 @@ export default function Navbar({ user, onLogout }) {
           value={selectedPlaylistId}
           onChange={handlePlaylistSelect}
           disabled={!playlists.length}
-          placeholder={playlists.length ? "Open a playlist" : "No playlists yet"}
+          placeholder={
+            playlists.length ? "Open a playlist" : "No playlists yet"
+          }
           options={playlists.map((playlist) => ({
             value: playlist._id,
             label: playlist.name,

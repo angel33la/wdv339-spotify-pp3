@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Button, Input } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 
 export default function SearchBar({ onSearch }) {
   const [query, setQuery] = useState("");
@@ -12,19 +14,22 @@ export default function SearchBar({ onSearch }) {
 
   return (
     <form onSubmit={handleSubmit} className="search-bar">
-      <input
+      <Input
         className="search-bar-input"
         type="text"
         placeholder="Search artist or song"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
+        allowClear
       />
-      <button
-        type="submit"
+      <Button
+        type="primary"
+        htmlType="submit"
         className="search-bar-button"
+        icon={<SearchOutlined />}
       >
         Search
-      </button>
+      </Button>
     </form>
   );
 }

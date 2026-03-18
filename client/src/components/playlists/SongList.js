@@ -1,4 +1,5 @@
-import { Typography } from "antd";
+import { Button, Typography } from "antd";
+import { DeleteOutlined, PlayCircleOutlined } from "@ant-design/icons";
 
 export default function SongList({ songs, onPlay, onRemove }) {
   if (!songs.length) {
@@ -25,19 +26,22 @@ export default function SongList({ songs, onPlay, onRemove }) {
             {song.channelTitle}
           </Typography.Text>
           <div className="playlist-song-actions">
-            <button
+            <Button
+              type="primary"
+              icon={<PlayCircleOutlined />}
               className="search-result-action"
               onClick={() => onPlay(song)}
             >
               Play
-            </button>
+            </Button>
             {onRemove && (
-              <button
+              <Button
+                icon={<DeleteOutlined />}
                 className="search-result-action search-result-open"
                 onClick={() => onRemove(song.videoId)}
               >
                 Remove
-              </button>
+              </Button>
             )}
           </div>
         </article>

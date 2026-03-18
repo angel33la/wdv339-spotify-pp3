@@ -1,4 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { Button, Typography } from "antd";
+import {
+  CloseOutlined,
+  HeartFilled,
+  HeartOutlined,
+  MenuOutlined,
+  PauseCircleOutlined,
+  PlayCircleOutlined,
+  RedoOutlined,
+  StepBackwardOutlined,
+  StepForwardOutlined,
+} from "@ant-design/icons";
 import "./Player.css";
 
 export default function Player({ tracks = [] }) {
@@ -125,9 +137,12 @@ export default function Player({ tracks = [] }) {
           <img src={currentTrackData.artwork} alt="" className="current" />
           <img src={nextTrackData.artwork} alt="" className="next" />
 
-          <button className="player__playlist-toggle" onClick={toggleViewMode}>
-            <span>{viewMode === "playlist" ? "✕" : "☰"}</span>
-          </button>
+          <Button
+            className="player__playlist-toggle"
+            onClick={toggleViewMode}
+            icon={viewMode === "playlist" ? <CloseOutlined /> : <MenuOutlined />}
+            aria-label="Toggle playlist"
+          />
 
           <PlaylistView
             tracks={defaultTracks}
@@ -137,8 +152,12 @@ export default function Player({ tracks = [] }) {
         </section>
 
         <section className="player__body">
-          <p className="player__title">{currentTrackData.name}</p>
-          <p className="player__subtitle">{currentTrackData.artist}</p>
+          <Typography.Text className="player__title">
+            {currentTrackData.name}
+          </Typography.Text>
+          <Typography.Text className="player__subtitle">
+            {currentTrackData.artist}
+          </Typography.Text>
           <Timestamp
             duration={currentTrackData.duration}
             current={currentTime}
@@ -173,8 +192,12 @@ function PlaylistView({ tracks, isVisible, changeTrack }) {
             className="player__playlist-thumb"
           />
           <div className="player__playlist-content">
-            <p className="player__playlist-title">{track.name}</p>
-            <p className="player__playlist-artist">{track.artist}</p>
+            <Typography.Text className="player__playlist-title">
+              {track.name}
+            </Typography.Text>
+            <Typography.Text className="player__playlist-artist">
+              {track.artist}
+            </Typography.Text>
           </div>
         </li>
       ))}
@@ -214,33 +237,31 @@ function Controls({
 }) {
   return (
     <div className="player__controls">
-      <button className="player__control-btn" title="Repeat">
-        <span>⟲</span>
-      </button>
-      <button
+      <Button className="player__control-btn" title="Repeat" icon={<RedoOutlined />} />
+      <Button
         className="player__control-btn"
         onClick={prevTrack}
         title="Previous"
-      >
-        <span>⏮</span>
-      </button>
-      <button
+        icon={<StepBackwardOutlined />}
+      />
+      <Button
         className="player__control-btn player__control-play"
         onClick={togglePlay}
         title="Play/Pause"
-      >
-        <span>{isPlaying ? "⏸" : "▶"}</span>
-      </button>
-      <button className="player__control-btn" onClick={nextTrack} title="Next">
-        <span>⏭</span>
-      </button>
-      <button
+        icon={isPlaying ? <PauseCircleOutlined /> : <PlayCircleOutlined />}
+      />
+      <Button
+        className="player__control-btn"
+        onClick={nextTrack}
+        title="Next"
+        icon={<StepForwardOutlined />}
+      />
+      <Button
         className={`player__control-btn player__control-like ${isLiked ? "is-liked" : ""}`}
         onClick={toggleLike}
         title="Like"
-      >
-        <span>{isLiked ? "♥" : "♡"}</span>
-      </button>
+        icon={isLiked ? <HeartFilled /> : <HeartOutlined />}
+      />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { useContext, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { Spin, Typography } from "antd";
 import { AuthContext } from "../context/AuthContext";
 
 export default function AuthSuccess() {
@@ -18,5 +19,13 @@ export default function AuthSuccess() {
     }
   }, [params, loginWithToken, navigate]);
 
-  return <p>Signing you in...</p>;
+  return (
+    <div
+      className="home-page"
+      style={{ minHeight: "60vh", justifyContent: "center" }}
+    >
+      <Spin size="large" />
+      <Typography.Text>Signing you in...</Typography.Text>
+    </div>
+  );
 }

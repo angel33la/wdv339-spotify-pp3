@@ -1,5 +1,11 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import { Typography } from "antd";
+import { Button, Input, Typography } from "antd";
+import {
+  CheckOutlined,
+  EditOutlined,
+  PlusOutlined,
+  SaveOutlined,
+} from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   getPlaylist,
@@ -69,26 +75,32 @@ export default function PlaylistDetails() {
       <section className="playlist-details-header">
         {isEditing ? (
           <form className="playlist-edit-form" onSubmit={handleSaveName}>
-            <input
+            <Input
               className="playlist-edit-input"
               type="text"
               value={nameDraft}
               onChange={(e) => setNameDraft(e.target.value)}
               placeholder="Playlist name"
             />
-            <button type="submit" disabled={isSavingName}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              disabled={isSavingName}
+              icon={<SaveOutlined />}
+            >
               {isSavingName ? "Saving..." : "Save Name"}
-            </button>
-            <button
+            </Button>
+            <Button
               type="button"
               className="search-result-action search-result-open"
+              icon={<CheckOutlined />}
               onClick={() => {
                 setIsEditing(false);
                 setNameDraft(playlist.name || "");
               }}
             >
               Cancel
-            </button>
+            </Button>
           </form>
         ) : (
           <Typography.Title level={1} className="playlists-title">
@@ -104,15 +116,20 @@ export default function PlaylistDetails() {
           </Typography.Text>
         ) : null}
         <div className="playlist-details-toolbar">
-          <button onClick={() => setIsEditing((prev) => !prev)}>
+          <Button
+            type="primary"
+            icon={isEditing ? <CheckOutlined /> : <EditOutlined />}
+            onClick={() => setIsEditing((prev) => !prev)}
+          >
             {isEditing ? "Done Editing" : "Edit Playlist"}
-          </button>
-          <button
+          </Button>
+          <Button
             className="search-result-action search-result-open"
+            icon={<PlusOutlined />}
             onClick={() => navigate("/")}
           >
             Add Videos
-          </button>
+          </Button>
         </div>
       </section>
 

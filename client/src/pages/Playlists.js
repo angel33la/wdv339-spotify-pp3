@@ -54,11 +54,13 @@ export default function Playlists() {
   };
 
   if (authLoading || loading) {
-    return <div>Loading playlists...</div>;
+    return <Typography.Text>Loading playlists...</Typography.Text>;
   }
 
   if (!token) {
-    return <div>Please sign in to view your playlists.</div>;
+    return (
+      <Typography.Text>Please sign in to view your playlists.</Typography.Text>
+    );
   }
 
   return (

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Typography } from "antd";
+import { Button, Input, Typography } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 
 export default function CreatePlaylistForm({ onCreate }) {
   const [name, setName] = useState("");
@@ -25,7 +26,7 @@ export default function CreatePlaylistForm({ onCreate }) {
           Create New Playlist
         </Typography.Title>
         <form className="create-playlist-form" onSubmit={handleSubmit}>
-          <input
+          <Input
             className="create-playlist-input"
             type="text"
             placeholder="Enter playlist name"
@@ -35,13 +36,15 @@ export default function CreatePlaylistForm({ onCreate }) {
             autoFocus
             required
           />
-          <button
-            type="submit"
+          <Button
+            htmlType="submit"
+            type="primary"
             className="create-playlist-button"
             disabled={isLoading}
+            icon={<PlusOutlined />}
           >
             {isLoading ? "Creating..." : "Create Playlist"}
-          </button>
+          </Button>
         </form>
       </div>
     </div>

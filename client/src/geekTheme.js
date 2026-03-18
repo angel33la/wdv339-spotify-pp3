@@ -85,8 +85,25 @@ const useGeekTheme = () => {
           lineWidth: 2,
           colorPrimary: "#00BCD4",
           colorText: "#FFFFFF",
+          colorTextSecondary: "rgba(176, 190, 197, 0.9)",
+          colorTextHeading: "#FFFFFF",
+          colorBgContainer: "#0a0a0a",
+          colorBgElevated: "#121212",
           controlHeightSM: 26,
           controlHeight: 34,
+        },
+        components: {
+          Typography: {
+            titleMarginBottom: 0,
+            titleMarginTop: 0,
+          },
+          Input: {
+            colorBorder: "#00BCD4",
+            colorTextPlaceholder: "rgba(144, 164, 174, 0.8)",
+          },
+          Select: {
+            colorBorder: "#00BCD4",
+          },
         },
       },
       app: {

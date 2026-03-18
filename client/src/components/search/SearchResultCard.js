@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Typography } from "antd";
+import { Button, Select, Typography } from "antd";
+import {
+  FolderOpenOutlined,
+  PlayCircleOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 
 export default function SearchResultCard({ song, playlists, onPlay, onAdd }) {
   const navigate = useNavigate();
@@ -46,44 +51,47 @@ export default function SearchResultCard({ song, playlists, onPlay, onAdd }) {
       <Typography.Text type="secondary">{song.channelTitle}</Typography.Text>
 
       <div className="search-result-actions">
-        <button className="search-result-action" onClick={() => onPlay(song)}>
+        <Button
+          type="primary"
+          icon={<PlayCircleOutlined />}
+          className="search-result-action"
+          onClick={() => onPlay(song)}
+        >
           Play
-        </button>
+        </Button>
 
         <div className="search-result-add-row">
-          <select
+          <Select
             className="search-result-select"
             value={selectedPlaylistId}
-            onChange={(e) => setSelectedPlaylistId(e.target.value)}
+            onChange={setSelectedPlaylistId}
             disabled={!playlists.length}
-          >
-            {!playlists.length ? (
-              <option value="">No playlists</option>
-            ) : (
-              playlists.map((playlist) => (
-                <option key={playlist._id} value={playlist._id}>
-                  {playlist.name}
-                </option>
-              ))
-            )}
-          </select>
+            placeholder={!playlists.length ? "No playlists" : "Choose playlist"}
+            options={playlists.map((playlist) => ({
+              value: playlist._id,
+              label: playlist.name,
+            }))}
+          />
 
-          <button
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
             className="search-result-action"
             onClick={handleAddSelected}
             disabled={!selectedPlaylistId}
           >
             Add
-          </button>
+          </Button>
         </div>
 
-        <button
+        <Button
+          icon={<FolderOpenOutlined />}
           className="search-result-action search-result-open"
           onClick={handleOpenSelected}
           disabled={!selectedPlaylistId}
         >
           Open Playlist
-        </button>
+        </Button>
       </div>
     </article>
   );
