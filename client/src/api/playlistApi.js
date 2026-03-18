@@ -82,3 +82,15 @@ export const removeSongFromPlaylist = async (playlistId, songId, token) => {
 
   return res.data;
 };
+
+export const deletePlaylist = async (playlistId, token) => {
+  const res = await requestWithRefresh(
+    (activeToken) =>
+      axios.delete(`${API}/api/playlists/${playlistId}`, {
+        headers: authHeaders(activeToken),
+      }),
+    token,
+  );
+
+  return res.data;
+};

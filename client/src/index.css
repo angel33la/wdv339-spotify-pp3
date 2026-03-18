@@ -161,6 +161,96 @@ button:focus-visible {
   font-size: 1rem;
 }
 
+.home-watch-layout {
+  width: min(1320px, 94vw);
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.watch-main {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.watch-player-wrap {
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.watch-player-wrap iframe {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 14px;
+}
+
+.video-empty-state {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: var(--color-bg-container);
+  border: 1px dashed var(--color-border);
+  border-radius: 14px;
+  color: var(--color-text-secondary);
+  padding: 20px;
+}
+
+.watch-current-title {
+  margin: 0 !important;
+  color: var(--color-text) !important;
+  line-height: 1.3;
+}
+
+.watch-current-channel {
+  margin-top: -4px;
+}
+
+.watch-sidebar {
+  position: sticky;
+  top: 16px;
+  max-height: calc(100vh - 32px);
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.watch-sidebar-title {
+  margin: 0 0 12px !important;
+  color: var(--color-text) !important;
+}
+
+.watch-sidebar .search-results-grid {
+  width: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.watch-sidebar .search-result-card {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  align-items: start;
+  gap: 10px;
+  padding: 12px;
+}
+
+.watch-sidebar .search-result-thumb {
+  width: 150px;
+  height: 84px;
+  aspect-ratio: auto;
+  border-radius: 8px;
+}
+
+.watch-sidebar .search-result-actions {
+  grid-column: 2;
+  margin-top: 6px;
+}
+
 .search-bar {
   width: min(1200px, 92vw);
   display: flex;
@@ -477,6 +567,17 @@ button:focus-visible {
 .playlist-song-actions button {
   padding: 8px 12px;
   font-size: 0.85rem;
+}
+
+.playlist-delete-song-button.ant-btn {
+  width: 100%;
+}
+
+.playlist-delete-song-button.ant-btn:hover,
+.playlist-delete-song-button.ant-btn:focus {
+  background: #ff4d4f !important;
+  border-color: #ff4d4f !important;
+  color: #fff !important;
 }
 
 .playlist-empty-state {
@@ -1076,6 +1177,33 @@ button:focus-visible {
   .search-bar-input.ant-input-affix-wrapper,
   .search-bar-button {
     height: 48px;
+  }
+
+  .home-watch-layout {
+    width: min(92vw, 100%);
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .watch-sidebar {
+    position: static;
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
+  }
+
+  .watch-sidebar .search-result-card {
+    grid-template-columns: 1fr;
+  }
+
+  .watch-sidebar .search-result-thumb {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+
+  .watch-sidebar .search-result-actions {
+    grid-column: auto;
   }
 
   .playlist-details-header {

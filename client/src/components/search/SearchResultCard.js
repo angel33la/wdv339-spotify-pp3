@@ -3,11 +3,18 @@ import { useNavigate } from "react-router-dom";
 import { Button, Select, Typography } from "antd";
 import {
   FolderOpenOutlined,
+  OrderedListOutlined,
   PlayCircleOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
 
-export default function SearchResultCard({ song, playlists, onPlay, onAdd }) {
+export default function SearchResultCard({
+  song,
+  playlists,
+  onPlay,
+  onAdd,
+  onQueue,
+}) {
   const navigate = useNavigate();
   const [selectedPlaylistId, setSelectedPlaylistId] = useState(
     playlists[0]?._id || "",
@@ -91,6 +98,14 @@ export default function SearchResultCard({ song, playlists, onPlay, onAdd }) {
           disabled={!selectedPlaylistId}
         >
           Open Playlist
+        </Button>
+
+        <Button
+          icon={<OrderedListOutlined />}
+          className="search-result-action"
+          onClick={() => onQueue?.(song)}
+        >
+          Queue Similar
         </Button>
       </div>
     </article>

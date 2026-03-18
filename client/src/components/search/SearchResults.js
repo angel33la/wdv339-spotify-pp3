@@ -1,6 +1,12 @@
 import SearchResultCard from "./SearchResultCard";
 
-export default function SearchResults({ results, playlists, onPlay, onAdd }) {
+export default function SearchResults({
+  results,
+  playlists,
+  onPlay,
+  onAdd,
+  onQueue,
+}) {
   if (!results.length) return null;
 
   return (
@@ -12,6 +18,7 @@ export default function SearchResults({ results, playlists, onPlay, onAdd }) {
           playlists={playlists}
           onPlay={onPlay}
           onAdd={onAdd}
+          onQueue={onQueue}
         />
       ))}
     </div>

@@ -36,11 +36,12 @@ export default function SongList({ songs, onPlay, onRemove }) {
             </Button>
             {onRemove && (
               <Button
+                danger
                 icon={<DeleteOutlined />}
-                className="search-result-action search-result-open"
+                className="search-result-action playlist-delete-song-button"
                 onClick={() => onRemove(song.videoId)}
               >
-                Remove
+                Delete Song
               </Button>
             )}
           </div>

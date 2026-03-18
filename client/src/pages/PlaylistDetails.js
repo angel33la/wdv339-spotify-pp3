@@ -1,14 +1,16 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import { Button, Input, Typography } from "antd";
+import { Button, Input, message, Popconfirm, Typography } from "antd";
 import {
   CheckOutlined,
   CloseOutlined,
+  DeleteOutlined,
   EditOutlined,
   PlusOutlined,
   SaveOutlined,
 } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import {
+  deletePlaylist,
   getPlaylist,
   removeSongFromPlaylist,
   updatePlaylistName,
@@ -21,11 +23,13 @@ export default function PlaylistDetails() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { token } = useContext(AuthContext);
+  const [messageApi, contextHolder] = message.useMessage();
   const [playlist, setPlaylist] = useState(null);
   const [selectedSong, setSelectedSong] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [nameDraft, setNameDraft] = useState("");
   const [isSavingName, setIsSavingName] = useState(false);
+  const [isDeletingPlaylist, setIsDeletingPlaylist] = useState(false);
   const [error, setError] = useState("");
 
   const loadPlaylist = useCallback(async () => {
@@ -44,8 +48,30 @@ export default function PlaylistDetails() {
   }, [loadPlaylist]);
 
   const handleRemove = async (songId) => {
-    await removeSongFromPlaylist(id, songId, token);
-    await loadPlaylist();
+    try {
+      await removeSongFromPlaylist(id, songId, token);
+      messageApi.success("Song removed from playlist.");
+      await loadPlaylist();
+    } catch (err) {
+      messageApi.error(
+        err?.response?.data?.message || "Failed to remove song from playlist.",
+      );
+    }
+  };
+
+  const handleDeletePlaylist = async () => {
+    try {
+      setIsDeletingPlaylist(true);
+      await deletePlaylist(id, token);
+      messageApi.success("Playlist deleted.");
+      navigate("/playlists");
+    } catch (err) {
+      messageApi.error(
+        err?.response?.data?.message || "Failed to delete playlist.",
+      );
+    } finally {
+      setIsDeletingPlaylist(false);
+    }
   };
 
   const handleSaveName = async (e) => {
@@ -73,6 +99,7 @@ export default function PlaylistDetails() {
 
   return (
     <div className="playlist-details-page">
+      {contextHolder}
       <section className="playlist-details-header">
         {isEditing ? (
           <form className="playlist-edit-form" onSubmit={handleSaveName}>
@@ -133,6 +160,22 @@ export default function PlaylistDetails() {
           >
             Add Videos
           </Button>
+          <Popconfirm
+            title="Delete this playlist?"
+            description="This will permanently remove the playlist and its songs."
+            okText="Delete"
+            cancelText="Cancel"
+            okButtonProps={{ danger: true, loading: isDeletingPlaylist }}
+            onConfirm={handleDeletePlaylist}
+          >
+            <Button
+              danger
+              icon={<DeleteOutlined />}
+              loading={isDeletingPlaylist}
+            >
+              Delete Playlist
+            </Button>
+          </Popconfirm>
         </div>
       </section>
 
