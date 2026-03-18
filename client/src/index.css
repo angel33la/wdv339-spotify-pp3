@@ -894,6 +894,11 @@ button:focus-visible {
   cursor: pointer;
 }
 
+.playlist-card:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
 .playlist-card:hover {
   transform: translateY(-2px);
   border-color: var(--color-primary);
@@ -923,6 +928,11 @@ button:focus-visible {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+.playlist-card-delete.ant-btn {
+  margin: 8px 0 0;
+  width: 100%;
 }
 
 .formRoot {

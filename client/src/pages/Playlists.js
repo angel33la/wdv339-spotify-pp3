@@ -1,15 +1,21 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import { Typography } from "antd";
-import { createPlaylist, getPlaylists } from "../api/playlistApi";
+import { message, Typography } from "antd";
+import {
+  createPlaylist,
+  deletePlaylist,
+  getPlaylists,
+} from "../api/playlistApi";
 import { AuthContext } from "../context/AuthContext";
 import CreatePlaylistForm from "../components/playlists/CreatePlaylistForm";
 import PlaylistCard from "../components/playlists/PlayListCard";
 
 export default function Playlists() {
   const { token, loading: authLoading } = useContext(AuthContext);
+  const [messageApi, contextHolder] = message.useMessage();
   const [playlists, setPlaylists] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [deletingPlaylistId, setDeletingPlaylistId] = useState("");
 
   const loadPlaylists = useCallback(async () => {
     if (!token) {
@@ -53,6 +59,21 @@ export default function Playlists() {
     }
   };
 
+  const handleDelete = async (playlistId) => {
+    try {
+      setDeletingPlaylistId(playlistId);
+      await deletePlaylist(playlistId, token);
+      messageApi.success("Playlist deleted.");
+      await loadPlaylists();
+    } catch (err) {
+      messageApi.error(
+        err?.response?.data?.message || "Failed to delete playlist.",
+      );
+    } finally {
+      setDeletingPlaylistId("");
+    }
+  };
+
   if (authLoading || loading) {
     return <Typography.Text>Loading playlists...</Typography.Text>;
   }
@@ -65,6 +86,7 @@ export default function Playlists() {
 
   return (
     <div className="playlists-page">
+      {contextHolder}
       <Typography.Title level={1} className="playlists-title">
         Your Playlists
       </Typography.Title>
@@ -72,7 +94,12 @@ export default function Playlists() {
       <CreatePlaylistForm onCreate={handleCreate} />
       <div className="playlists-grid">
         {playlists.map((playlist) => (
-          <PlaylistCard key={playlist._id} playlist={playlist} />
+          <PlaylistCard
+            key={playlist._id}
+            playlist={playlist}
+            onDelete={handleDelete}
+            isDeleting={deletingPlaylistId === playlist._id}
+          />
         ))}
       </div>
     </div>
