@@ -1,19 +1,34 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getPlaylist, removeSongFromPlaylist } from "../api/playlistApi";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  getPlaylist,
+  removeSongFromPlaylist,
+  updatePlaylistName,
+} from "../api/playlistApi";
 import { AuthContext } from "../context/AuthContext";
 import SongList from "../components/playlists/SongList";
 import VideoPlayer from "../components/player/VideoPlayer";
 
 export default function PlaylistDetails() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const { token } = useContext(AuthContext);
   const [playlist, setPlaylist] = useState(null);
   const [selectedSong, setSelectedSong] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [nameDraft, setNameDraft] = useState("");
+  const [isSavingName, setIsSavingName] = useState(false);
+  const [error, setError] = useState("");
 
   const loadPlaylist = useCallback(async () => {
-    const data = await getPlaylist(id, token);
-    setPlaylist(data);
+    try {
+      setError("");
+      const data = await getPlaylist(id, token);
+      setPlaylist(data);
+      setNameDraft(data.name || "");
+    } catch (err) {
+      setError(err?.response?.data?.message || "Failed to load playlist.");
+    }
   }, [id, token]);
 
   useEffect(() => {
@@ -25,13 +40,71 @@ export default function PlaylistDetails() {
     await loadPlaylist();
   };
 
+  const handleSaveName = async (e) => {
+    e.preventDefault();
+
+    if (!nameDraft.trim()) {
+      setError("Playlist name is required.");
+      return;
+    }
+
+    try {
+      setError("");
+      setIsSavingName(true);
+      await updatePlaylistName(id, nameDraft.trim(), token);
+      await loadPlaylist();
+      setIsEditing(false);
+    } catch (err) {
+      setError(err?.response?.data?.message || "Failed to update playlist.");
+    } finally {
+      setIsSavingName(false);
+    }
+  };
+
   if (!playlist) return <p>Loading...</p>;
 
   return (
     <div className="playlist-details-page">
       <div className="playlist-details-header">
-        <h1 className="playlists-title">{playlist.name}</h1>
+        {isEditing ? (
+          <form className="playlist-edit-form" onSubmit={handleSaveName}>
+            <input
+              className="playlist-edit-input"
+              type="text"
+              value={nameDraft}
+              onChange={(e) => setNameDraft(e.target.value)}
+              placeholder="Playlist name"
+            />
+            <button type="submit" disabled={isSavingName}>
+              {isSavingName ? "Saving..." : "Save Name"}
+            </button>
+            <button
+              type="button"
+              className="search-result-action search-result-open"
+              onClick={() => {
+                setIsEditing(false);
+                setNameDraft(playlist.name || "");
+              }}
+            >
+              Cancel
+            </button>
+          </form>
+        ) : (
+          <h1 className="playlists-title">{playlist.name}</h1>
+        )}
         <p className="playlist-details-count">{playlist.songs.length} videos</p>
+        {error ? <p className="home-error">{error}</p> : null}
+        <div className="playlist-details-toolbar">
+          <button onClick={() => setIsEditing((prev) => !prev)}>
+            {isEditing ? "Done Editing" : "Edit Playlist"}
+          </button>
+          <button
+            className="search-result-action search-result-open"
+            onClick={() => navigate("/")}
+          >
+            Add Videos
+          </button>
+        </div>
       </div>
       <div className="player-wrap">
         <VideoPlayer videoId={selectedSong?.videoId} />
@@ -39,7 +112,7 @@ export default function PlaylistDetails() {
       <SongList
         songs={playlist.songs}
         onPlay={setSelectedSong}
-        onRemove={handleRemove}
+        onRemove={isEditing ? handleRemove : undefined}
       />
     </div>
   );

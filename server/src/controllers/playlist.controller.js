@@ -121,6 +121,33 @@ export const removeSongFromPlaylist = async (req, res) => {
   }
 };
 
+export const updatePlaylistName = async (req, res) => {
+  try {
+    const { name } = req.body;
+
+    if (!name?.trim()) {
+      return res.status(400).json({ message: "Playlist name is required" });
+    }
+
+    const playlist = await Playlist.findOne({
+      _id: req.params.id,
+      user: req.user._id,
+    });
+
+    if (!playlist) {
+      return res.status(404).json({ message: "Playlist not found" });
+    }
+
+    playlist.name = name.trim();
+    await playlist.save();
+
+    res.status(200).json(playlist);
+  } catch (error) {
+    console.error("Update playlist name error:", error.message);
+    res.status(500).json({ message: "Failed to update playlist name" });
+  }
+};
+
 export const deletePlaylist = async (req, res) => {
   try {
     const playlist = await Playlist.findOneAndDelete({

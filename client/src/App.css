@@ -1,25 +1,25 @@
 :root {
-  --color-primary: #ff00ff;
-  --color-primary-hover: #ff4dff;
-  --color-primary-active: #cc00cc;
-  --color-success: #00ff8c;
-  --color-warning: #ffea00;
-  --color-error: #ff1744;
-  --color-info: #00e5ff;
-  --color-info-hover: #33eaff;
-  --color-info-active: #00b7cc;
-  --color-text: rgba(255, 255, 255, 0.95);
-  --color-text-secondary: rgba(255, 255, 255, 0.82);
-  --color-text-muted: rgba(255, 255, 255, 0.72);
-  --color-bg-base: #0a0a0a;
-  --color-bg-container: #111111;
-  --color-bg-elevated: #1a1a1a;
-  --color-border: #666666;
-  --focus-ring: 0 0 0 3px rgba(0, 229, 255, 0.65);
+  --color-primary: #39ff14;
+  --color-primary-hover: #67ff4a;
+  --color-primary-active: #1ccb00;
+  --color-success: #39ff14;
+  --color-warning: #f2ff00;
+  --color-error: #ff4d4f;
+  --color-info: #76ff03;
+  --color-info-hover: #9cff5a;
+  --color-info-active: #39d100;
+  --color-text: rgba(57, 255, 20, 0.95);
+  --color-text-secondary: rgba(136, 255, 122, 0.9);
+  --color-text-muted: rgba(170, 255, 160, 0.8);
+  --color-bg-base: #050505;
+  --color-bg-container: #0a0a0a;
+  --color-bg-elevated: #121212;
+  --color-border: #39ff14;
+  --focus-ring: 0 0 0 3px rgba(57, 255, 20, 0.5);
   --shadow-neon:
-    0 0 10px rgba(255, 0, 255, 0.25), 0 0 20px rgba(0, 229, 255, 0.15);
+    0 0 10px rgba(57, 255, 20, 0.3), 0 0 20px rgba(57, 255, 20, 0.2);
   --shadow-neon-strong:
-    0 0 15px rgba(255, 0, 255, 0.35), 0 0 30px rgba(0, 229, 255, 0.25);
+    0 0 15px rgba(57, 255, 20, 0.45), 0 0 30px rgba(57, 255, 20, 0.3);
 }
 
 /* This is for the React frontend of the application. It defines the styles for the components used in the App.js file. The styles include the layout, colors, and animations for the logo and header. The logo will spin infinitely if the user has not set a preference for reduced motion.*/

@@ -43,6 +43,22 @@ export const createPlaylist = async (name, token) => {
   return res.data;
 };
 
+export const updatePlaylistName = async (playlistId, name, token) => {
+  const res = await requestWithRefresh(
+    (activeToken) =>
+      axios.put(
+        `${API}/api/playlists/${playlistId}`,
+        { name },
+        {
+          headers: authHeaders(activeToken),
+        },
+      ),
+    token,
+  );
+
+  return res.data;
+};
+
 export const addSongToPlaylist = async (playlistId, song, token) => {
   const res = await requestWithRefresh(
     (activeToken) =>
