@@ -1,6 +1,9 @@
 body {
   margin: 0;
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-family: Impact,
+  Haettenschweiler,
+  "Noto Sans Display",
+  sans-serif;
   background-color: var(--color-bg-base);
   color: var(--color-text);
 }
@@ -35,7 +38,7 @@ nav {
 
 .navbar-user-avatar {
   border: 1px solid var(--color-border);
-  box-shadow: 0 0 8px rgba(0, 188, 212, 0.25);
+  box-shadow: 0 0 8px rgba(var(--color-primary-rgb), 0.25);
 }
 
 .navbar-user-icon {
@@ -69,7 +72,7 @@ nav {
 }
 
 .navbar-playlist-select .ant-select-selector {
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-family: Impact, Haettenschweiler, "Noto Sans Display", sans-serif;
   font-size: 1rem !important;
   font-weight: 600;
   color: var(--color-text) !important;
@@ -82,7 +85,7 @@ nav {
 }
 
 .navbar-playlist-dropdown .ant-select-item-option-content {
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-family: Impact, Haettenschweiler, "Noto Sans Display", sans-serif;
   font-size: 0.95rem;
   color: var(--color-text);
 }
@@ -196,11 +199,11 @@ button:focus-visible {
   min-height: 760px;
   overflow: hidden;
   border-radius: 28px;
-  border: 1px solid rgba(134, 231, 245, 0.18);
+  border: 1px solid var(--color-primary-border-soft);
   background:
     radial-gradient(
       circle at 50% 20%,
-      rgba(77, 101, 138, 0.35),
+      rgba(var(--color-primary-rgb), 0.22),
       transparent 26%
     ),
     radial-gradient(
@@ -497,7 +500,7 @@ button:focus-visible {
 .playlist-edit-input:focus-visible {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.3);
+  box-shadow: var(--focus-ring);
   transform: scale(1.01);
 }
 
@@ -588,7 +591,7 @@ button:focus-visible {
   border-color: var(--color-primary);
   box-shadow:
     0 4px 12px rgba(0, 0, 0, 0.3),
-    0 0 12px rgba(0, 188, 212, 0.2);
+    0 0 12px rgba(var(--color-primary-rgb), 0.2);
 }
 
 .playlist-song-card h3 {
@@ -969,7 +972,7 @@ button:focus-visible {
 .create-playlist-input:focus-visible {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.3);
+  box-shadow: var(--focus-ring);
   transform: scale(1.01);
 }
 
@@ -999,7 +1002,7 @@ button:focus-visible {
 
 .create-playlist-button:hover:not(:disabled) {
   background: var(--color-primary-hover);
-  box-shadow: 0 0 15px rgba(0, 188, 212, 0.4);
+  box-shadow: 0 0 15px rgba(var(--color-primary-rgb), 0.4);
   transform: translateY(-2px);
 }
 
@@ -1010,7 +1013,7 @@ button:focus-visible {
 
 .create-playlist-button:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.3);
+  box-shadow: var(--focus-ring);
 }
 
 .playlists-page {
@@ -1065,7 +1068,7 @@ button:focus-visible {
   border-color: var(--color-primary);
   box-shadow:
     0 4px 12px rgba(0, 0, 0, 0.3),
-    0 0 12px rgba(0, 188, 212, 0.2);
+    0 0 12px rgba(var(--color-primary-rgb), 0.2);
 }
 
 .playlist-card h3 {
@@ -1118,12 +1121,12 @@ button:focus-visible {
   right: 18px;
   bottom: 18px;
   width: min(360px, calc(100vw - 24px));
-  border: 1px solid rgba(0, 188, 212, 0.28);
+  border: 1px solid var(--color-primary-border-soft);
   border-radius: 18px;
   background: rgba(10, 10, 10, 0.96);
   box-shadow:
     0 18px 36px rgba(0, 0, 0, 0.34),
-    0 0 18px rgba(0, 188, 212, 0.18);
+    0 0 18px rgba(var(--color-primary-rgb), 0.18);
   z-index: 1200;
   overflow: hidden;
   backdrop-filter: blur(14px);
@@ -1209,7 +1212,7 @@ button:focus-visible {
 
 .persistent-player-actions .ant-btn:hover,
 .persistent-player-actions .ant-btn:focus {
-  background: rgba(0, 188, 212, 0.16) !important;
+  background: var(--color-primary-soft-strong) !important;
   color: var(--color-text) !important;
 }
 

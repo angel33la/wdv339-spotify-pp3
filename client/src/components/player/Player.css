@@ -1,4 +1,4 @@
-/* Music Player Styles with Cyan Theme */
+/* Music Player Styles */
 
 .player-wrapper {
   width: 100%;
@@ -21,7 +21,7 @@
   background: var(--color-bg-container);
   box-shadow:
     0 10px 40px rgba(0, 0, 0, 0.5),
-    0 0 30px rgba(0, 188, 212, 0.2);
+    0 0 30px rgba(var(--color-primary-rgb), 0.2);
   display: flex;
   flex-direction: column;
   z-index: 10;
@@ -140,8 +140,8 @@
 }
 
 .player__playlist-toggle:hover {
-  background: rgba(0, 188, 212, 0.3);
-  box-shadow: 0 0 12px rgba(0, 188, 212, 0.4);
+  background: rgba(var(--color-primary-rgb), 0.3);
+  box-shadow: 0 0 12px rgba(var(--color-primary-rgb), 0.4);
 }
 
 .player.is-sliding-next .player__playlist-toggle,
@@ -179,7 +179,7 @@
   align-items: center;
   gap: 10px;
   padding: 10px;
-  border-top: 1px solid rgba(0, 188, 212, 0.2);
+  border-top: 1px solid rgba(var(--color-primary-rgb), 0.2);
   cursor: pointer;
   transition: all 0.2s ease;
   border-radius: 8px;
@@ -190,7 +190,7 @@
 }
 
 .player__playlist-item:hover {
-  background: rgba(0, 188, 212, 0.1);
+  background: var(--color-primary-soft);
   transform: translateX(4px);
 }
 

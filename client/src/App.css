@@ -1,37 +1,47 @@
 :root {
-  --color-primary: #00bcd4;
-  --color-primary-hover: #26c6da;
-  --color-primary-active: #0097a7;
-  --color-success: #26c6da;
+  --color-primary: #0958d9;
+  --color-primary-hover: #3b7ae3;
+  --color-primary-active: #0847b3;
+  --color-primary-rgb: 9, 88, 217;
+  --color-primary-soft: rgba(var(--color-primary-rgb), 0.1);
+  --color-primary-soft-strong: rgba(var(--color-primary-rgb), 0.16);
+  --color-primary-border-soft: rgba(var(--color-primary-rgb), 0.28);
+  --color-success: #1f6feb;
   --color-warning: #ffc107;
   --color-error: #ff5252;
-  --color-info: #00bcd4;
-  --color-info-hover: #26c6da;
-  --color-info-active: #0097a7;
+  --color-info: #0958d9;
+  --color-info-hover: #3b7ae3;
+  --color-info-active: #0847b3;
   --color-text: rgba(255, 255, 255, 0.95);
   --color-text-secondary: rgba(176, 190, 197, 0.9);
   --color-text-muted: rgba(144, 164, 174, 0.8);
   --color-bg-base: #050505;
   --color-bg-container: #0a0a0a;
   --color-bg-elevated: #121212;
-  --color-border: #00bcd4;
-  --focus-ring: 0 0 0 3px rgba(0, 188, 212, 0.4);
+  --color-border: #2c63cf;
+  --focus-ring: 0 0 0 3px rgba(var(--color-primary-rgb), 0.35);
   --shadow-neon:
-    0 0 10px rgba(0, 188, 212, 0.3), 0 0 20px rgba(0, 188, 212, 0.2);
+    0 0 10px rgba(var(--color-primary-rgb), 0.3),
+    0 0 20px rgba(var(--color-primary-rgb), 0.2);
   --shadow-neon-strong:
-    0 0 15px rgba(0, 188, 212, 0.45), 0 0 30px rgba(0, 188, 212, 0.3);
+    0 0 15px rgba(var(--color-primary-rgb), 0.45),
+    0 0 30px rgba(var(--color-primary-rgb), 0.3);
 }
 
 body[data-theme="light"] {
-  --color-primary: #0288d1;
-  --color-primary-hover: #0277bd;
-  --color-primary-active: #01579b;
-  --color-success: #0277bd;
+  --color-primary: #0958d9;
+  --color-primary-hover: #084ec1;
+  --color-primary-active: #073f9c;
+  --color-primary-rgb: 9, 88, 217;
+  --color-primary-soft: rgba(var(--color-primary-rgb), 0.08);
+  --color-primary-soft-strong: rgba(var(--color-primary-rgb), 0.14);
+  --color-primary-border-soft: rgba(var(--color-primary-rgb), 0.22);
+  --color-success: #0958d9;
   --color-warning: #f57c00;
   --color-error: #d32f2f;
-  --color-info: #0288d1;
-  --color-info-hover: #0277bd;
-  --color-info-active: #01579b;
+  --color-info: #0958d9;
+  --color-info-hover: #084ec1;
+  --color-info-active: #073f9c;
   --color-text: rgba(0, 0, 0, 0.85);
   --color-text-secondary: rgba(0, 0, 0, 0.65);
   --color-text-muted: rgba(0, 0, 0, 0.45);
@@ -39,9 +49,13 @@ body[data-theme="light"] {
   --color-bg-container: #ffffff;
   --color-bg-elevated: #f5f5f5;
   --color-border: #d9d9d9;
-  --focus-ring: 0 0 0 3px rgba(2, 136, 209, 0.2);
-  --shadow-neon: 0 2px 8px rgba(0, 0, 0, 0.15);
-  --shadow-neon-strong: 0 4px 16px rgba(0, 0, 0, 0.2);
+  --focus-ring: 0 0 0 3px rgba(var(--color-primary-rgb), 0.2);
+  --shadow-neon:
+    0 2px 8px rgba(0, 0, 0, 0.12),
+    0 0 10px rgba(var(--color-primary-rgb), 0.08);
+  --shadow-neon-strong:
+    0 4px 16px rgba(0, 0, 0, 0.16),
+    0 0 16px rgba(var(--color-primary-rgb), 0.12);
 }
 
 /* This is for the React frontend of the application. It defines the styles for the components used in the App.js file. The styles include the layout, colors, and animations for the logo and header. The logo will spin infinitely if the user has not set a preference for reduced motion.*/
@@ -72,7 +86,7 @@ body[data-theme="light"] {
 }
 
 .App-link {
-  color: #61dafb;
+  color: var(--color-primary);
 }
 
 @keyframes App-logo-spin {
