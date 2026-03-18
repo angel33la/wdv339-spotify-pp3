@@ -149,40 +149,54 @@ export default function Home() {
   return (
     <div className="home-page">
       {contextHolder}
-      <Typography.Title level={1} className="home-title">
-        Search Music Matie App
-      </Typography.Title>
-      <SearchBar onSearch={handleSearch} />
-      {error ? (
-        <Typography.Text type="danger" className="home-error">
-          {error} Try searching for something else or check your connection.
-        </Typography.Text>
-      ) : null}
+      <div className="home-shell">
+        <Typography.Title level={1} className="home-title">
+          Music Matie App
+        </Typography.Title>
+        <SearchBar onSearch={handleSearch} />
+        {error ? (
+          <Typography.Text type="danger" className="home-error">
+            {error} Try searching for something else or check your connection.
+          </Typography.Text>
+        ) : null}
+      </div>
 
       <div className="home-watch-layout">
         <section className="watch-main">
-          <div className="player-wrap watch-player-wrap">
+          <Typography.Title level={3} className="watch-section-title">
+            Now Playing
+          </Typography.Title>
+          <Typography.Text className="watch-now-playing-text">
+            {selectedSong?.title || "Select a song"}
+          </Typography.Text>
+          <div className="watch-stage">
             {selectedSong?.videoId ? (
-              <VideoPlayer videoId={selectedSong.videoId} />
+              <div className="player-wrap watch-player-wrap">
+                <VideoPlayer videoId={selectedSong.videoId} />
+              </div>
             ) : (
-              <div className="video-empty-state">
-                <Typography.Text>
-                  Select a song from the right to start playing.
-                </Typography.Text>
+              <div className="watch-poster" aria-hidden="true">
+                <div className="watch-poster-glow" />
+                <div className="watch-poster-hood">
+                  <span className="watch-poster-eye watch-poster-eye-left" />
+                  <span className="watch-poster-eye watch-poster-eye-right" />
+                </div>
+                <div className="watch-poster-title-wrap">
+                  <Typography.Text className="watch-poster-title">
+                    
+                  </Typography.Text>
+                  <Typography.Text className="watch-poster-subtitle">
+                    
+                  </Typography.Text>
+                </div>
+                <div className="watch-poster-speaker" />
               </div>
             )}
           </div>
-          <Typography.Title level={4} className="watch-current-title">
-            {selectedSong?.title || "Now Playing"}
-          </Typography.Title>
-          <Typography.Text type="secondary" className="watch-current-channel">
-            {selectedSong?.channelTitle ||
-              "Your selected song details appear here."}
-          </Typography.Text>
         </section>
 
         <aside className="watch-sidebar">
-          <Typography.Title level={4} className="watch-sidebar-title">
+          <Typography.Title level={3} className="watch-sidebar-title">
             Up Next
           </Typography.Title>
 
@@ -190,7 +204,7 @@ export default function Home() {
             <div className="queue-panel">
               <div className="queue-panel-header">
                 <Typography.Text className="queue-panel-title">
-                  Similarity Queue
+                  Similarity queue
                 </Typography.Text>
                 <Button
                   type="text"

@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { Button, Select, Typography } from "antd";
 import {
   BookOutlined,
+  CaretRightFilled,
   FolderOpenOutlined,
   OrderedListOutlined,
-  PlayCircleOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
 
@@ -49,26 +49,31 @@ export default function SearchResultCard({
 
   return (
     <article className="search-result-card">
+      <button
+        type="button"
+        className="search-result-play-trigger"
+        onClick={() => onPlay(song)}
+        aria-label={`Play ${song.title}`}
+      >
+        <CaretRightFilled />
+      </button>
+
       <img
         className="search-result-thumb"
         src={song.thumbnail}
         alt={song.title}
       />
-      <Typography.Title level={5} style={{ margin: "8px 0 0" }}>
-        {song.title}
-      </Typography.Title>
-      <Typography.Text type="secondary">{song.channelTitle}</Typography.Text>
+
+      <div className="search-result-copy">
+        <Typography.Title level={5} className="search-result-title">
+          {song.title}
+        </Typography.Title>
+        <Typography.Text type="secondary" className="search-result-channel">
+          {song.channelTitle}
+        </Typography.Text>
+      </div>
 
       <div className="search-result-actions">
-        <Button
-          type="primary"
-          icon={<PlayCircleOutlined />}
-          className="search-result-action"
-          onClick={() => onPlay(song)}
-        >
-          Play
-        </Button>
-
         <div className="search-result-add-row">
           <Select
             className="search-result-select"
@@ -93,30 +98,32 @@ export default function SearchResultCard({
           </Button>
         </div>
 
-        <Button
-          icon={<FolderOpenOutlined />}
-          className="search-result-action search-result-open"
-          onClick={handleOpenSelected}
-          disabled={!selectedPlaylistId}
-        >
-          Open Playlist
-        </Button>
+        <div className="search-result-action-row">
+          <Button
+            icon={<FolderOpenOutlined />}
+            className="search-result-action search-result-open"
+            onClick={handleOpenSelected}
+            disabled={!selectedPlaylistId}
+          >
+            Open
+          </Button>
 
-        <Button
-          icon={<OrderedListOutlined />}
-          className="search-result-action"
-          onClick={() => onQueue?.(song)}
-        >
-          Queue Similar
-        </Button>
+          <Button
+            icon={<OrderedListOutlined />}
+            className="search-result-action"
+            onClick={() => onQueue?.(song)}
+          >
+            Queue
+          </Button>
 
-        <Button
-          icon={<BookOutlined />}
-          className="search-result-action"
-          onClick={() => onSaveSong?.(song)}
-        >
-          Save to Songs
-        </Button>
+          <Button
+            icon={<BookOutlined />}
+            className="search-result-action"
+            onClick={() => onSaveSong?.(song)}
+          >
+            Save
+          </Button>
+        </div>
       </div>
     </article>
   );

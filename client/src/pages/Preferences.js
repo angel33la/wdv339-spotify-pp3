@@ -26,6 +26,11 @@ const genreOptions = [
   "Classical",
   "Lo-fi",
   "Indie",
+  "Metal",
+  "Reggae",
+  "Blues",
+  "Folk",
+  "Oldies",
 ].map((genre) => ({ value: genre, label: genre }));
 
 export default function Preferences() {
