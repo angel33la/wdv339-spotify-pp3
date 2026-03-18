@@ -32,7 +32,10 @@ This project is a music search application that allows users to search for songs
 - OAuth 2.0 Authentication (for user login and access to YouTube data)
 
 ### Other Considerations
-Ports 3000 (frontend) and 5000 (backend) should be available for development and testing. Ensure that CORS is properly configured on the backend to allow requests from the frontend.
+Ports 3000 (frontend) and 5000 (backend) should be available for development and testing. Ensure that CORS is properly configured on the backend to allow requests from the frontend. 
+
+### Icon & Theme Library for UI/UX
+- [ANT Design](https://ant.design/) for UI components and icons to enhance the user interface and experience.
 
 ## Getting Started
 ------
