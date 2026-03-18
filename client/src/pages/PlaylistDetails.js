@@ -2,6 +2,7 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { Button, Input, Typography } from "antd";
 import {
   CheckOutlined,
+  CloseOutlined,
   EditOutlined,
   PlusOutlined,
   SaveOutlined,
@@ -85,6 +86,7 @@ export default function PlaylistDetails() {
             <Button
               type="primary"
               htmlType="submit"
+              className="playlist-action-save"
               disabled={isSavingName}
               icon={<SaveOutlined />}
             >
@@ -92,8 +94,9 @@ export default function PlaylistDetails() {
             </Button>
             <Button
               type="button"
-              className="search-result-action search-result-open"
-              icon={<CheckOutlined />}
+              danger
+              className="playlist-action-cancel"
+              icon={<CloseOutlined />}
               onClick={() => {
                 setIsEditing(false);
                 setNameDraft(playlist.name || "");

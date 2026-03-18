@@ -24,6 +24,33 @@ nav {
   gap: 18px;
 }
 
+.navbar-user-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-bg-elevated);
+}
+
+.navbar-user-avatar {
+  border: 1px solid var(--color-border);
+  box-shadow: 0 0 8px rgba(0, 188, 212, 0.25);
+}
+
+.navbar-user-icon {
+  color: var(--color-info);
+}
+
+.navbar-user-name {
+  color: var(--color-text) !important;
+  font-weight: 600;
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .navbar-links {
   flex-wrap: wrap;
   font-size: 2rem;
@@ -39,6 +66,30 @@ nav {
   font-size: 1rem;
   color: var(--color-text);
   background: var(--color-bg-elevated);
+}
+
+.navbar-playlist-select .ant-select-selector {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-size: 1rem !important;
+  font-weight: 600;
+  color: var(--color-text) !important;
+}
+
+.navbar-playlist-select .ant-select-selection-item,
+.navbar-playlist-select .ant-select-selection-placeholder {
+  color: var(--color-text) !important;
+  font-weight: 600;
+}
+
+.navbar-playlist-dropdown .ant-select-item-option-content {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-size: 0.95rem;
+  color: var(--color-text);
+}
+
+.navbar-playlist-option-text {
+  color: var(--color-text) !important;
+  font-weight: 600;
 }
 
 a {
@@ -115,11 +166,12 @@ button:focus-visible {
   display: flex;
   justify-content: center;
   align-items: stretch;
+  gap: 0;
 }
 
 .search-bar-input {
   width: min(720px, 100%);
-  padding: 12px;
+  padding: 0 12px;
   font-size: 1rem;
   border-radius: 10px 0 0 10px;
   border: 1px solid var(--color-border);
@@ -130,6 +182,17 @@ button:focus-visible {
     border-color 0.2s ease,
     box-shadow 0.2s ease,
     background-color 0.2s ease;
+}
+
+.search-bar-input.ant-input-affix-wrapper {
+  height: 48px;
+  display: flex;
+  align-items: center;
+}
+
+.search-bar-input.ant-input-affix-wrapper .ant-input {
+  padding: 0;
+  background: transparent;
 }
 
 .search-bar-input::placeholder {
@@ -147,11 +210,15 @@ button:focus-visible {
 
 .search-bar-button {
   width: 130px;
+  height: 48px;
   margin: 0;
   border-radius: 0 10px 10px 0;
   background: var(--color-info);
   color: var(--color-bg-base);
   font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .search-bar-button:hover {
@@ -209,6 +276,42 @@ button:focus-visible {
   grid-template-columns: 1fr auto auto;
   align-items: center;
   gap: 10px;
+}
+
+.playlist-action-save.ant-btn {
+  background: #2e7d32;
+  border-color: #2e7d32;
+  color: #ffffff;
+}
+
+.playlist-action-save.ant-btn:hover,
+.playlist-action-save.ant-btn:focus {
+  background: #388e3c !important;
+  border-color: #388e3c !important;
+}
+
+.playlist-action-save.ant-btn:active {
+  background: #1b5e20 !important;
+  border-color: #1b5e20 !important;
+}
+
+.playlist-action-cancel.ant-btn {
+  border-color: #ff4d4f;
+  color: #ff4d4f;
+  background: transparent;
+}
+
+.playlist-action-cancel.ant-btn:hover,
+.playlist-action-cancel.ant-btn:focus {
+  border-color: #ff7875 !important;
+  color: #ffffff !important;
+  background: #ff4d4f !important;
+}
+
+.playlist-action-cancel.ant-btn:active {
+  border-color: #cf1322 !important;
+  background: #cf1322 !important;
+  color: #ffffff !important;
 }
 
 .playlist-edit-input {
@@ -559,7 +662,7 @@ button:focus-visible {
 }
 
 .create-playlist-title {
-  margin: 0 0 24px;
+  margin: 0 0 34px !important;
   color: var(--color-text);
   font-size: 1.5rem;
   font-weight: bold;
@@ -572,6 +675,7 @@ button:focus-visible {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 12px;
+  margin-top: 6px;
   align-items: center;
 }
 
@@ -945,6 +1049,14 @@ button:focus-visible {
     justify-content: center;
   }
 
+  .navbar-user-chip {
+    max-width: min(100%, 280px);
+  }
+
+  .navbar-user-name {
+    max-width: 140px;
+  }
+
   .navbar-playlist-select {
     min-width: 0;
     width: min(100%, 320px);
@@ -959,6 +1071,11 @@ button:focus-visible {
   .search-bar-button {
     width: 100%;
     border-radius: 10px;
+  }
+
+  .search-bar-input.ant-input-affix-wrapper,
+  .search-bar-button {
+    height: 48px;
   }
 
   .playlist-details-header {

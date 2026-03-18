@@ -140,7 +140,9 @@ export default function Player({ tracks = [] }) {
           <Button
             className="player__playlist-toggle"
             onClick={toggleViewMode}
-            icon={viewMode === "playlist" ? <CloseOutlined /> : <MenuOutlined />}
+            icon={
+              viewMode === "playlist" ? <CloseOutlined /> : <MenuOutlined />
+            }
             aria-label="Toggle playlist"
           />
 
@@ -237,7 +239,11 @@ function Controls({
 }) {
   return (
     <div className="player__controls">
-      <Button className="player__control-btn" title="Repeat" icon={<RedoOutlined />} />
+      <Button
+        className="player__control-btn"
+        title="Repeat"
+        icon={<RedoOutlined />}
+      />
       <Button
         className="player__control-btn"
         onClick={prevTrack}

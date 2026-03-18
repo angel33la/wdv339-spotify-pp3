@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Button, Select, Space, Typography } from "antd";
+import { Avatar, Button, Select, Space, Typography } from "antd";
 import {
   CustomerServiceOutlined,
   HomeOutlined,
   LogoutOutlined,
+  UserOutlined,
   ProfileOutlined,
 } from "@ant-design/icons";
 import { getPlaylists } from "../../api/playlistApi";
@@ -16,6 +17,9 @@ export default function Navbar({ user, onLogout }) {
   const navigate = useNavigate();
   const [playlists, setPlaylists] = useState([]);
   const [selectedPlaylistId, setSelectedPlaylistId] = useState("");
+
+  const displayName = user?.username || user?.name || user?.email || "User";
+  const avatarSrc = user?.imageUrl || user?.picture || user?.photo || undefined;
 
   useEffect(() => {
     const loadPlaylists = async () => {
@@ -79,20 +83,35 @@ export default function Navbar({ user, onLogout }) {
           value={selectedPlaylistId}
           onChange={handlePlaylistSelect}
           disabled={!playlists.length}
+          dropdownClassName="navbar-playlist-dropdown"
           placeholder={
             playlists.length ? "Open a playlist" : "No playlists yet"
           }
           options={playlists.map((playlist) => ({
             value: playlist._id,
-            label: playlist.name,
+            label: (
+              <Typography.Text className="navbar-playlist-option-text">
+                {playlist.name}
+              </Typography.Text>
+            ),
           }))}
           aria-label="Open a playlist"
         />
       </div>
       <div className="navbar-actions">
-        <Space size={8}>
-          <ProfileOutlined />
-          <Typography.Text>{user?.name}</Typography.Text>
+        <Space size={8} className="navbar-user-chip">
+          <Avatar
+            size={32}
+            src={avatarSrc}
+            icon={!avatarSrc ? <UserOutlined /> : null}
+            className="navbar-user-avatar"
+          />
+          <Space size={6}>
+            <ProfileOutlined className="navbar-user-icon" />
+            <Typography.Text className="navbar-user-name">
+              {displayName}
+            </Typography.Text>
+          </Space>
         </Space>
         <Button type="primary" icon={<LogoutOutlined />} onClick={onLogout}>
           Logout

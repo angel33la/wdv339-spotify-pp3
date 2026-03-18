@@ -8,7 +8,7 @@ export default function Login() {
       style={{ minHeight: "100vh", justifyContent: "center" }}
     >
       <Typography.Title level={1} className="home-title">
-        Music Search App
+        Music Matie App
       </Typography.Title>
       <LoginButton />
     </div>

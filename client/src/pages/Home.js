@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Typography } from "antd";
+import { message, Typography } from "antd";
 import { searchSongs } from "../api/searchApi";
 import { addSongToPlaylist, getPlaylists } from "../api/playlistApi";
 import { AuthContext } from "../context/AuthContext";
@@ -9,6 +9,7 @@ import VideoPlayer from "../components/player/VideoPlayer";
 
 export default function Home() {
   const { token } = useContext(AuthContext);
+  const [messageApi, contextHolder] = message.useMessage();
   const [results, setResults] = useState([]);
   const [playlists, setPlaylists] = useState([]);
   const [selectedSong, setSelectedSong] = useState(null);
@@ -39,20 +40,32 @@ export default function Home() {
   };
 
   const handleAddSong = async (playlistId, song) => {
-    await addSongToPlaylist(playlistId, song, token);
+    try {
+      await addSongToPlaylist(playlistId, song, token);
+      const playlistName =
+        playlists.find((playlist) => playlist._id === playlistId)?.name ||
+        "playlist";
+      messageApi.success(`Added "${song.title}" to ${playlistName}.`);
+    } catch (err) {
+      const messageText =
+        err?.response?.data?.message ||
+        "Could not add this song to the selected playlist.";
+      messageApi.error(messageText);
+    }
   };
 
   return (
     <div className="home-page">
+      {contextHolder}
       <Typography.Title level={1} className="home-title">
-        Search Music
+        Search Music Matie App
       </Typography.Title>
-      <SearchBar onSearch={handleSearch} />
       {error ? (
         <Typography.Text type="danger" className="home-error">
-          {error}
+          {error} Try searching for something else or check your connection.
         </Typography.Text>
       ) : null}
+      <SearchBar onSearch={handleSearch} />
       <div className="player-wrap">
         <VideoPlayer videoId={selectedSong?.videoId} />
       </div>
