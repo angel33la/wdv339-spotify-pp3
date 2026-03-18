@@ -1,6 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { Button, message, Tag, Typography } from "antd";
-import { CloseOutlined, DeleteOutlined } from "@ant-design/icons";
+import { CloseOutlined } from "@ant-design/icons";
 import { searchSongs } from "../api/searchApi";
 import { addSongToPlaylist, getPlaylists } from "../api/playlistApi";
 import { AuthContext } from "../context/AuthContext";
@@ -182,12 +182,8 @@ export default function Home() {
                   <span className="watch-poster-eye watch-poster-eye-right" />
                 </div>
                 <div className="watch-poster-title-wrap">
-                  <Typography.Text className="watch-poster-title">
-                    
-                  </Typography.Text>
-                  <Typography.Text className="watch-poster-subtitle">
-                    
-                  </Typography.Text>
+                  <Typography.Text className="watch-poster-title"></Typography.Text>
+                  <Typography.Text className="watch-poster-subtitle"></Typography.Text>
                 </div>
                 <div className="watch-poster-speaker" />
               </div>
@@ -207,9 +203,10 @@ export default function Home() {
                   Similarity queue
                 </Typography.Text>
                 <Button
+                  className="queue-panel-title"
                   type="text"
                   size="small"
-                  icon={<DeleteOutlined />}
+                  icon={<CloseOutlined />}
                   onClick={clearQueue}
                 >
                   Clear
