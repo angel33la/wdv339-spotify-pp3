@@ -65,7 +65,7 @@ export default function PlaylistDetails() {
 
   return (
     <div className="playlist-details-page">
-      <div className="playlist-details-header">
+      <section className="playlist-details-header">
         {isEditing ? (
           <form className="playlist-edit-form" onSubmit={handleSaveName}>
             <input
@@ -105,15 +105,27 @@ export default function PlaylistDetails() {
             Add Videos
           </button>
         </div>
-      </div>
-      <div className="player-wrap">
-        <VideoPlayer videoId={selectedSong?.videoId} />
-      </div>
-      <SongList
-        songs={playlist.songs}
-        onPlay={setSelectedSong}
-        onRemove={isEditing ? handleRemove : undefined}
-      />
+      </section>
+
+      <section className="playlist-content">
+        <div className="playlist-player-section">
+          <h2 className="playlist-player-title">
+            {selectedSong?.title || "Select a video to play"}
+          </h2>
+          <div className="playlist-mini-player">
+            <VideoPlayer videoId={selectedSong?.videoId} />
+          </div>
+        </div>
+
+        <div className="playlist-songs-section">
+          <h2 className="playlist-songs-title">Songs in Playlist</h2>
+          <SongList
+            songs={playlist.songs}
+            onPlay={setSelectedSong}
+            onRemove={isEditing ? handleRemove : undefined}
+          />
+        </div>
+      </section>
     </div>
   );
 }

@@ -2,42 +2,45 @@ import { useState } from "react";
 
 export default function CreatePlaylistForm({ onCreate }) {
   const [name, setName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!name.trim()) return;
 
-    await onCreate(name);
-    setName("");
+    try {
+      setIsLoading(true);
+      await onCreate(name);
+      setName("");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        style={{
-          padding: "8.5px",
-          fontSize: "1rem",
-          width: "300px",
-          borderRadius: "5px 0 0 5px",
-        }}
-        type="text"
-        placeholder="New playlist name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <button
-        type="submit"
-        style={{
-          padding: "8px 8.5px",
-          fontSize: "1rem",
-          width: "100px",
-          borderRadius: "0 5px 5px 0",
-          backgroundColor: "#fff",
-          color: "#1a143c",
-        }}
-      >
-        Create Playlist
-      </button>
-    </form>
+    <div className="create-playlist-container">
+      <div className="create-playlist-card">
+        <h2 className="create-playlist-title">Create New Playlist</h2>
+        <form className="create-playlist-form" onSubmit={handleSubmit}>
+          <input
+            className="create-playlist-input"
+            type="text"
+            placeholder="Enter playlist name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            disabled={isLoading}
+            autoFocus
+            required
+          />
+          <button
+            type="submit"
+            className="create-playlist-button"
+            disabled={isLoading}
+          >
+            {isLoading ? "Creating..." : "Create Playlist"}
+          </button>
+        </form>
+      </div>
+    </div>
   );
 }
