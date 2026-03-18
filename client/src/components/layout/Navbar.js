@@ -5,6 +5,7 @@ import {
   CustomerServiceOutlined,
   HomeOutlined,
   LogoutOutlined,
+  ReadOutlined,
   UserOutlined,
   ProfileOutlined,
 } from "@ant-design/icons";
@@ -78,6 +79,12 @@ export default function Navbar({ user, onLogout }) {
             <Typography.Text>Playlists</Typography.Text>
           </Space>
         </Link>
+        <Link to="/songs">
+          <Space size={6}>
+            <ReadOutlined />
+            <Typography.Text>Songs</Typography.Text>
+          </Space>
+        </Link>
         <Select
           className="navbar-playlist-select"
           value={selectedPlaylistId}
@@ -99,20 +106,26 @@ export default function Navbar({ user, onLogout }) {
         />
       </div>
       <div className="navbar-actions">
-        <Space size={8} className="navbar-user-chip">
-          <Avatar
-            size={32}
-            src={avatarSrc}
-            icon={!avatarSrc ? <UserOutlined /> : null}
-            className="navbar-user-avatar"
-          />
-          <Space size={6}>
-            <ProfileOutlined className="navbar-user-icon" />
-            <Typography.Text className="navbar-user-name">
-              {displayName}
-            </Typography.Text>
+        <Button
+          type="text"
+          className="navbar-user-chip-button"
+          onClick={() => navigate("/preferences")}
+        >
+          <Space size={8} className="navbar-user-chip">
+            <Avatar
+              size={32}
+              src={avatarSrc}
+              icon={!avatarSrc ? <UserOutlined /> : null}
+              className="navbar-user-avatar"
+            />
+            <Space size={6}>
+              <ProfileOutlined className="navbar-user-icon" />
+              <Typography.Text className="navbar-user-name">
+                {displayName}
+              </Typography.Text>
+            </Space>
           </Space>
-        </Space>
+        </Button>
         <Button type="primary" icon={<LogoutOutlined />} onClick={onLogout}>
           Logout
         </Button>

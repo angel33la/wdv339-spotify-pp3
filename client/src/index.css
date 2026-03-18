@@ -164,7 +164,7 @@ button:focus-visible {
 .home-watch-layout {
   width: min(1320px, 94vw);
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr);
+  grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
   gap: 24px;
   align-items: start;
 }
@@ -187,17 +187,19 @@ button:focus-visible {
 }
 
 .video-empty-state {
-  width: 100%;
-  aspect-ratio: 16 / 9;
+  width: 55%;
+  margin: auto 0;
+  min-height: 180px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  text-align: center;
+  justify-content: flex-start;
+  text-align: left;
   background: var(--color-bg-container);
   border: 1px dashed var(--color-border);
   border-radius: 14px;
   color: var(--color-text-secondary);
   padding: 20px;
+  font-size: 14px;
 }
 
 .watch-current-title {

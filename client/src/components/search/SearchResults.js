@@ -6,6 +6,7 @@ export default function SearchResults({
   onPlay,
   onAdd,
   onQueue,
+  onSaveSong,
 }) {
   if (!results.length) return null;
 
@@ -19,6 +20,7 @@ export default function SearchResults({
           onPlay={onPlay}
           onAdd={onAdd}
           onQueue={onQueue}
+          onSaveSong={onSaveSong}
         />
       ))}
     </div>

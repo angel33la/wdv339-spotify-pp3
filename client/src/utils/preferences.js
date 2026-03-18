@@ -1,5 +1,6 @@
 const PREFS_KEY = "music-app-preferences";
 const REC_STATS_KEY = "music-app-rec-stats";
+const PROFILE_SONGS_KEY = "music-app-profile-songs";
 
 export const DEFAULT_PREFERENCES = {
   themeMode: "dark",
@@ -78,7 +79,8 @@ const getThemeMode = () => {
 
 export const applyThemeFromPreferences = () => {
   const mode = getThemeMode();
-  document.body.dataset.theme = mode;
+  document.body.setAttribute("data-theme", mode);
+  document.documentElement.setAttribute("data-theme", mode);
 };
 
 export const loadRecommendationStats = () => {
@@ -106,4 +108,67 @@ export const pushRecommendationEvent = (type, song) => {
   stats[key][artist] = currentCount + 1;
 
   localStorage.setItem(REC_STATS_KEY, JSON.stringify(stats));
+};
+
+export const loadProfileSongs = () => {
+  const raw = localStorage.getItem(PROFILE_SONGS_KEY);
+  const parsed = raw ? safeParse(raw, []) : [];
+
+  if (!Array.isArray(parsed)) {
+    return [];
+  }
+
+  return parsed
+    .map((song) => ({
+      videoId: String(song?.videoId || "").trim(),
+      title: String(song?.title || "Untitled"),
+      channelTitle: String(song?.channelTitle || ""),
+      thumbnail: String(song?.thumbnail || ""),
+      addedAt: Number(song?.addedAt || Date.now()),
+    }))
+    .filter((song) => song.videoId);
+};
+
+export const saveProfileSongs = (songs) => {
+  const normalized = Array.isArray(songs)
+    ? songs.filter((song) => song?.videoId)
+    : [];
+
+  localStorage.setItem(PROFILE_SONGS_KEY, JSON.stringify(normalized));
+  return normalized;
+};
+
+export const addProfileSong = (song) => {
+  const songs = loadProfileSongs();
+  const exists = songs.some((item) => item.videoId === song?.videoId);
+
+  if (exists) {
+    return { added: false, songs };
+  }
+
+  const nextSongs = [
+    {
+      videoId: String(song?.videoId || ""),
+      title: String(song?.title || "Untitled"),
+      channelTitle: String(song?.channelTitle || ""),
+      thumbnail: String(song?.thumbnail || ""),
+      addedAt: Date.now(),
+    },
+    ...songs,
+  ].slice(0, 250);
+
+  saveProfileSongs(nextSongs);
+  return { added: true, songs: nextSongs };
+};
+
+export const removeProfileSong = (videoId) => {
+  const nextSongs = loadProfileSongs().filter(
+    (song) => song.videoId !== videoId,
+  );
+  saveProfileSongs(nextSongs);
+  return nextSongs;
+};
+
+export const clearProfileSongs = () => {
+  saveProfileSongs([]);
 };

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Select, Typography } from "antd";
 import {
+  BookOutlined,
   FolderOpenOutlined,
   OrderedListOutlined,
   PlayCircleOutlined,
@@ -14,6 +15,7 @@ export default function SearchResultCard({
   onPlay,
   onAdd,
   onQueue,
+  onSaveSong,
 }) {
   const navigate = useNavigate();
   const [selectedPlaylistId, setSelectedPlaylistId] = useState(
@@ -106,6 +108,14 @@ export default function SearchResultCard({
           onClick={() => onQueue?.(song)}
         >
           Queue Similar
+        </Button>
+
+        <Button
+          icon={<BookOutlined />}
+          className="search-result-action"
+          onClick={() => onSaveSong?.(song)}
+        >
+          Save to Songs
         </Button>
       </div>
     </article>

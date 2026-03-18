@@ -7,6 +7,7 @@ import { AuthContext } from "../context/AuthContext";
 import SearchBar from "../components/search/SearchBar";
 import SearchResults from "../components/search/SearchResults";
 import VideoPlayer from "../components/player/VideoPlayer";
+import { addProfileSong } from "../utils/preferences";
 
 const normalize = (value) => String(value || "").toLowerCase();
 
@@ -112,6 +113,16 @@ export default function Home() {
     });
   };
 
+  const handleSaveSong = (song) => {
+    const result = addProfileSong(song);
+
+    if (result.added) {
+      messageApi.success(`Saved "${song.title}" to your Songs page.`);
+    } else {
+      messageApi.info(`"${song.title}" is already saved.`);
+    }
+  };
+
   const removeQueuedSong = (videoId) => {
     setQueuedSongs((previous) =>
       previous.filter((queuedSong) => queuedSong.videoId !== videoId),
@@ -215,6 +226,7 @@ export default function Home() {
             onPlay={setSelectedSong}
             onAdd={handleAddSong}
             onQueue={handleQueueSong}
+            onSaveSong={handleSaveSong}
           />
         </aside>
       </div>
