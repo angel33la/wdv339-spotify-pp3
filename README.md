@@ -1,9 +1,11 @@
-# wdv339-fullstack-pp3
+# Music/Search/Play FullStack MERN App
+
+[![wakatime](https://wakatime.com/badge/user/b96a527d-dac8-42c8-8cc7-e19aa6fac9cb/project/608498db-339c-45f9-9ce1-49cf37fa3412.svg)](https://wakatime.com/badge/user/b96a527d-dac8-42c8-8cc7-e19aa6fac9cb/project/608498db-339c-45f9-9ce1-49cf37fa3412)
 
 # Project Overview
 ------
 
-Music Search App Project for Project Portfolio ||| @ Full Sail University
+Music/Search/Play App Project for Project Portfolio 3 @ Full Sail University
 This project is a music search application that allows users to search for songs, artists, and albums using the [YouTube API](https://developers.google.com/youtube/v3). The app provides a user-friendly interface for exploring music and discovering new tracks. In a microservice structure using both a frontend and a backend, the frontend is built with React and the backend is built with Node.js and Express. The app also includes features such as user authentication (OAuth JSON web tokens), playlist creation, and music recommendations based on user preferences.
 
 ## Prerequisites
