@@ -1,5 +1,7 @@
 # Music/Search/Play FullStack MERN App
 
+<a href='https://github.com/shivamkapasia0' target="_blank"><img alt='Github' src='https://img.shields.io/badge/FSU_2026-100000?style=for-the-badge&logo=Github&logoColor=ffffff&labelColor=000000&color=e55525'/></a>
+
 # Project Overview
 ------
 
