@@ -113,32 +113,32 @@ export default function Player({ tracks = [] }) {
   const nextTrackData = defaultTracks[nextTrack];
 
   const slidingClass =
-    sliding === -1 ? "is-sliding-prev" : sliding === 1 ? "is-sliding-next" : "";
+    sliding === -1 ? "isSlidingPrev" : sliding === 1 ? "isSlidingNext" : "";
   const isLiked = likedTracks.includes(currentTrack);
 
   return (
-    <div className="player-wrapper">
+    <div className="playerWrapper">
       <article className={`player ${slidingClass}`}>
         <div
-          className="player__bg prev"
+          className="playerBg prev"
           style={{ backgroundImage: `url(${prevTrackData.artwork})` }}
         ></div>
         <div
-          className="player__bg"
+          className="playerBg"
           style={{ backgroundImage: `url(${currentTrackData.artwork})` }}
         ></div>
         <div
-          className="player__bg next"
+          className="playerBg next"
           style={{ backgroundImage: `url(${nextTrackData.artwork})` }}
         ></div>
 
-        <section className="player__art">
+        <section className="playerArt">
           <img src={prevTrackData.artwork} alt="" className="prev" />
           <img src={currentTrackData.artwork} alt="" className="current" />
           <img src={nextTrackData.artwork} alt="" className="next" />
 
           <Button
-            className="player__playlist-toggle"
+            className="playerPlaylistToggle"
             onClick={toggleViewMode}
             icon={
               viewMode === "playlist" ? <CloseOutlined /> : <MenuOutlined />
@@ -153,11 +153,11 @@ export default function Player({ tracks = [] }) {
           />
         </section>
 
-        <section className="player__body">
-          <Typography.Text className="player__title">
+        <section className="playerBody">
+          <Typography.Text className="playerTitle">
             {currentTrackData.name}
           </Typography.Text>
-          <Typography.Text className="player__subtitle">
+          <Typography.Text className="playerSubtitle">
             {currentTrackData.artist}
           </Typography.Text>
           <Timestamp
@@ -181,23 +181,23 @@ export default function Player({ tracks = [] }) {
 
 function PlaylistView({ tracks, isVisible, changeTrack }) {
   return (
-    <ul className={`player__playlist ${isVisible ? "" : "is-hidden"}`}>
+    <ul className={`playerPlaylist ${isVisible ? "" : "isHidden"}`}>
       {tracks.map((track, i) => (
         <li
           key={i}
-          className="player__playlist-item"
+          className="playerPlaylistItem"
           onClick={() => changeTrack(i)}
         >
           <img
             src={track.artwork}
             alt={track.name}
-            className="player__playlist-thumb"
+            className="playerPlaylistThumb"
           />
-          <div className="player__playlist-content">
-            <Typography.Text className="player__playlist-title">
+          <div className="playerPlaylistContent">
+            <Typography.Text className="playerPlaylistTitle">
               {track.name}
             </Typography.Text>
-            <Typography.Text className="player__playlist-artist">
+            <Typography.Text className="playerPlaylistArtist">
               {track.artist}
             </Typography.Text>
           </div>
@@ -215,14 +215,14 @@ function Timestamp({ duration, current }) {
   };
 
   return (
-    <div className="player__timestamp">
-      <div className="player__timestamp-current">{convertTime(current)}</div>
-      <div className="player__timestamp-progress">
+    <div className="playerTimestamp">
+      <div className="playerTimestampCurrent">{convertTime(current)}</div>
+      <div className="playerTimestampProgress">
         <div
           style={{ width: `${Math.floor((current / duration) * 100)}%` }}
         ></div>
       </div>
-      <div className="player__timestamp-total">
+      <div className="playerTimestampTotal">
         {convertTime(duration - current)}
       </div>
     </div>
@@ -238,32 +238,32 @@ function Controls({
   toggleLike,
 }) {
   return (
-    <div className="player__controls">
+    <div className="playerControls">
       <Button
-        className="player__control-btn"
+        className="playerControlBtn"
         title="Repeat"
         icon={<RedoOutlined />}
       />
       <Button
-        className="player__control-btn"
+        className="playerControlBtn"
         onClick={prevTrack}
         title="Previous"
         icon={<StepBackwardOutlined />}
       />
       <Button
-        className="player__control-btn player__control-play"
+        className="playerControlBtn playerControlPlay"
         onClick={togglePlay}
         title="Play/Pause"
         icon={isPlaying ? <PauseCircleOutlined /> : <PlayCircleOutlined />}
       />
       <Button
-        className="player__control-btn"
+        className="playerControlBtn"
         onClick={nextTrack}
         title="Next"
         icon={<StepForwardOutlined />}
       />
       <Button
-        className={`player__control-btn player__control-like ${isLiked ? "is-liked" : ""}`}
+        className={`playerControlBtn playerControlLike ${isLiked ? "isLiked" : ""}`}
         onClick={toggleLike}
         title="Like"
         icon={isLiked ? <HeartFilled /> : <HeartOutlined />}

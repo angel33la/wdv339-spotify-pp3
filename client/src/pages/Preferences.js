@@ -82,14 +82,14 @@ export default function Preferences() {
   };
 
   return (
-    <div className="playlists-page">
+    <div className="playlistsPage">
       {contextHolder}
-      <Typography.Title level={1} className="playlists-title">
+      <Typography.Title level={1} className="playlistsTitle">
         Preferences
       </Typography.Title>
 
       <div
-        className="create-playlist-card"
+        className="createPlaylistCard"
         style={{ width: "min(900px, 92vw)" }}
       >
         <Form

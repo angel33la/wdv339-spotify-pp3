@@ -1,44 +1,27 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Avatar, Button, Select, Space, Typography } from "antd";
+import { Avatar, Button, Space, Typography } from "antd";
 import {
+  CloseOutlined,
   CustomerServiceOutlined,
   HomeOutlined,
   LogoutOutlined,
+  MenuOutlined,
   ReadOutlined,
   UserOutlined,
   ProfileOutlined,
 } from "@ant-design/icons";
-import { getPlaylists } from "../../api/playlistApi";
-import { AuthContext } from "../../context/AuthContext";
+import { PlaylistContext } from "../../context/PlaylistContext";
 
 export default function Navbar({ user, onLogout }) {
-  const { token } = useContext(AuthContext);
+  const { playlists } = useContext(PlaylistContext);
   const location = useLocation();
   const navigate = useNavigate();
-  const [playlists, setPlaylists] = useState([]);
   const [selectedPlaylistId, setSelectedPlaylistId] = useState("");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const displayName = user?.username || user?.name || user?.email || "User";
   const avatarSrc = user?.imageUrl || user?.picture || user?.photo || undefined;
-
-  useEffect(() => {
-    const loadPlaylists = async () => {
-      if (!token) {
-        setPlaylists([]);
-        return;
-      }
-
-      try {
-        const data = await getPlaylists(token);
-        setPlaylists(data);
-      } catch {
-        setPlaylists([]);
-      }
-    };
-
-    loadPlaylists();
-  }, [location.pathname, token]);
 
   useEffect(() => {
     const pathMatch = location.pathname.match(/^\/playlists\/([^/]+)$/);
@@ -51,6 +34,10 @@ export default function Navbar({ user, onLogout }) {
     setSelectedPlaylistId("");
   }, [location.pathname]);
 
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
+
   const handlePlaylistSelect = (playlistId) => {
     setSelectedPlaylistId(playlistId);
 
@@ -61,74 +48,100 @@ export default function Navbar({ user, onLogout }) {
 
   return (
     <nav>
-      <div className="navbar-links">
+      <div className="navbarMobileTopbar">
         <img
-          src="/favicon.png"
+          src="/images/logo-40.png"
+          srcSet="/images/logo-40.png 1x, /images/logo-80.png 2x"
+          sizes="40px"
           alt="App Logo"
           style={{ width: "40px", height: "40px" }}
         />
-        <Link to="/">
-          <Space size={6}>
-            <HomeOutlined />
-            <Typography.Text>Home</Typography.Text>
-          </Space>
-        </Link>
-        <Link to="/playlists">
-          <Space size={6}>
-            <CustomerServiceOutlined />
-            <Typography.Text>Playlists</Typography.Text>
-          </Space>
-        </Link>
-        <Link to="/songs">
-          <Space size={6}>
-            <ReadOutlined />
-            <Typography.Text>Songs</Typography.Text>
-          </Space>
-        </Link>
-        <Select
-          className="navbar-playlist-select"
-          value={selectedPlaylistId}
-          onChange={handlePlaylistSelect}
-          disabled={!playlists.length}
-          dropdownClassName="navbar-playlist-dropdown"
-          placeholder={
-            playlists.length ? "Open a playlist" : "No playlists yet"
-          }
-          options={playlists.map((playlist) => ({
-            value: playlist._id,
-            label: (
-              <Typography.Text className="navbar-playlist-option-text">
-                {playlist.name}
-              </Typography.Text>
-            ),
-          }))}
-          aria-label="Open a playlist"
-        />
-      </div>
-      <div className="navbar-actions">
         <Button
           type="text"
-          className="navbar-user-chip-button"
-          onClick={() => navigate("/preferences")}
-        >
-          <Space size={8} className="navbar-user-chip">
-            <Avatar
-              size={32}
-              src={avatarSrc}
-              icon={!avatarSrc ? <UserOutlined /> : null}
-              className="navbar-user-avatar"
-            />
+          className="navbarMobileToggle"
+          icon={isMobileMenuOpen ? <CloseOutlined /> : <MenuOutlined />}
+          onClick={() => setIsMobileMenuOpen((isOpen) => !isOpen)}
+          aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+        />
+      </div>
+      <div
+        className={`navbarMobileMenu ${
+          isMobileMenuOpen ? "navbarMobileMenuOpen" : ""
+        }`}
+      >
+        <div className="navbarLinks">
+          <Link to="/">
             <Space size={6}>
-              <ProfileOutlined className="navbar-user-icon" />
-              <Typography.Text className="navbar-user-name">
-                {displayName}
+              <HomeOutlined />
+              <Typography.Text className="navbarLinkLabel">
+                Home
               </Typography.Text>
             </Space>
-          </Space>
-        </Button>
-        <Button type="primary" icon={<LogoutOutlined />} onClick={onLogout}>
-          Logout
-        </Button>
+          </Link>
+          <Link to="/playlists">
+            <Space size={6}>
+              <CustomerServiceOutlined />
+              <Typography.Text className="navbarLinkLabel">
+                Playlists
+              </Typography.Text>
+            </Space>
+          </Link>
+          <Link to="/songs">
+            <Space size={6}>
+              <ReadOutlined />
+              <Typography.Text className="navbarLinkLabel">
+                Songs
+              </Typography.Text>
+            </Space>
+          </Link>
+          <select
+            className="navbarPlaylistSelect"
+            value={selectedPlaylistId}
+            onChange={(event) => handlePlaylistSelect(event.target.value)}
+            disabled={!playlists.length}
+            aria-label="Open a playlist"
+          >
+            <option value="" disabled>
+              {playlists.length ? "Open a playlist" : "No playlists yet"}
+            </option>
+            {playlists.map((playlist) => (
+              <option key={playlist._id} value={playlist._id}>
+                {playlist.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="navbarActions">
+          <Button
+            type="text"
+            className="navbarUserChipButton"
+            onClick={() => navigate("/preferences")}
+          >
+            <Space size={8} className="navbarUserChip">
+              <Avatar
+                size={32}
+                src={avatarSrc}
+                alt={`${displayName} avatar`}
+                icon={!avatarSrc ? <UserOutlined /> : null}
+                className="navbarUserAvatar"
+              />
+              <Space size={6}>
+                <ProfileOutlined className="navbarUserIcon" />
+                <Typography.Text className="navbarUserName">
+                  {displayName}
+                </Typography.Text>
+              </Space>
+            </Space>
+          </Button>
+          <Button
+            type="primary"
+            icon={<LogoutOutlined />}
+            onClick={onLogout}
+            className="navbarLogoutButton pinkActionButton"
+          >
+            Logout
+          </Button>
+        </div>
       </div>
     </nav>
   );

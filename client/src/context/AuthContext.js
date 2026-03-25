@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
     try {
       await logoutRequest();
     } catch {
-      // Client-side cleanup should still run even if backend logout fails.
+      // Client side cleanup should still run even if backend logout fails.
     }
 
     removeToken();

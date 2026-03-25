@@ -11,7 +11,7 @@ export default function SearchResults({
   if (!results.length) return null;
 
   return (
-    <div className="search-results-grid">
+    <div className="searchResultsGrid">
       {results.map((song) => (
         <SearchResultCard
           key={song.videoId}

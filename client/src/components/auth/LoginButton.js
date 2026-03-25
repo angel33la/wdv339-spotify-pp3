@@ -6,7 +6,12 @@ export default function LoginButton() {
 
   return (
     <a href={`${api}/api/auth/google`}>
-      <Button type="primary" icon={<GoogleOutlined />} size="large">
+      <Button
+        type="primary"
+        icon={<GoogleOutlined />}
+        size="large"
+        className="loginGoogleButton pinkActionButton"
+      >
         Sign in with Google
       </Button>
     </a>

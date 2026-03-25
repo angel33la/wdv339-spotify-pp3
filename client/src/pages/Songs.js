@@ -34,12 +34,12 @@ export default function Songs() {
   };
 
   return (
-    <div className="playlist-details-page">
-      <section className="playlist-details-header">
-        <Typography.Title level={1} className="playlists-title">
+    <div className="playlistDetailsPage">
+      <section className="playlistDetailsHeader">
+        <Typography.Title level={1} className="playlistsTitle">
           My Songs
         </Typography.Title>
-        <Typography.Text type="secondary" className="playlist-details-count">
+        <Typography.Text type="secondary" className="playlistDetailsCount">
           {songs.length} saved songs
         </Typography.Text>
         {songs.length ? (
@@ -57,31 +57,31 @@ export default function Songs() {
         ) : null}
       </section>
 
-      <section className="playlist-content">
-        <div className="playlist-player-section">
-          <Typography.Title level={2} className="playlist-player-title">
+      <section className="playlistContent">
+        <div className="playlistPlayerSection">
+          <Typography.Title level={2} className="playlistPlayerTitle">
             {currentSong?.title || "Select a saved song"}
           </Typography.Title>
-          <div className="playlist-mini-player">
+          <div className="playlistMiniPlayer">
             <VideoPlayer videoId={currentSong?.videoId} />
           </div>
         </div>
 
-        <div className="playlist-songs-section">
-          <Typography.Title level={2} className="playlist-songs-title">
+        <div className="playlistSongsSection">
+          <Typography.Title level={2} className="playlistSongsTitle">
             Saved Songs
           </Typography.Title>
 
           {!songs.length ? (
-            <Typography.Paragraph className="playlist-empty-state">
+            <Typography.Paragraph className="playlistEmptyState">
               No songs saved yet. Use "Save to Songs" from search results.
             </Typography.Paragraph>
           ) : (
-            <div className="playlist-songs-grid">
+            <div className="playlistSongsGrid">
               {songs.map((song) => (
-                <article key={song.videoId} className="playlist-song-card">
+                <article key={song.videoId} className="playlistSongCard">
                   <img
-                    className="playlist-song-thumb"
+                    className="playlistSongThumb"
                     src={song.thumbnail}
                     alt={song.title}
                   />
@@ -91,7 +91,7 @@ export default function Songs() {
                   <Typography.Text type="secondary">
                     {song.channelTitle}
                   </Typography.Text>
-                  <div className="playlist-song-actions">
+                  <div className="playlistSongActions">
                     <Button type="primary" onClick={() => setCurrentSong(song)}>
                       Play
                     </Button>

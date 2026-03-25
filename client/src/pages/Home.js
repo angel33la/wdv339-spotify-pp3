@@ -1,10 +1,11 @@
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { Button, message, Tag, Typography } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import { searchSongs } from "../api/searchApi";
-import { addSongToPlaylist, getPlaylists } from "../api/playlistApi";
+import { addSongToPlaylist } from "../api/playlistApi";
 import { AuthContext } from "../context/AuthContext";
 import { PlayerContext } from "../context/PlayerContext";
+import { PlaylistContext } from "../context/PlaylistContext";
 import SearchBar from "../components/search/SearchBar";
 import SearchResults from "../components/search/SearchResults";
 import VideoPlayer from "../components/player/VideoPlayer";
@@ -57,20 +58,11 @@ const getSimilarityScore = (song, queuedSongs) => {
 export default function Home() {
   const { token } = useContext(AuthContext);
   const { currentSong, setCurrentSong } = useContext(PlayerContext);
+  const { playlists, refreshPlaylists } = useContext(PlaylistContext);
   const [messageApi, contextHolder] = message.useMessage();
   const [results, setResults] = useState([]);
-  const [playlists, setPlaylists] = useState([]);
   const [queuedSongs, setQueuedSongs] = useState([]);
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    const loadPlaylists = async () => {
-      const data = await getPlaylists(token);
-      setPlaylists(data);
-    };
-
-    if (token) loadPlaylists();
-  }, [token]);
 
   const handleSearch = async (query) => {
     try {
@@ -90,6 +82,7 @@ export default function Home() {
   const handleAddSong = async (playlistId, song) => {
     try {
       await addSongToPlaylist(playlistId, song, token);
+      await refreshPlaylists({ silent: true });
       const playlistName =
         playlists.find((playlist) => playlist._id === playlistId)?.name ||
         "playlist";
@@ -148,36 +141,36 @@ export default function Home() {
   }, [results, queuedSongs]);
 
   return (
-    <div className="home-page">
+    <div className="homePage">
       {contextHolder}
-      <div className="home-shell">
-        <Typography.Title level={1} className="home-title">
-          Music Matie App
+      <div className="homeShell">
+        <Typography.Title level={1} className="homeTitle">
+          ∙Music∙Search∙Play∙App∙
         </Typography.Title>
         <SearchBar onSearch={handleSearch} />
         {error ? (
-          <Typography.Text type="danger" className="home-error">
+          <Typography.Text type="danger" className="homeError">
             {error} Try searching for something else or check your connection.
           </Typography.Text>
         ) : null}
       </div>
 
-      <div className="home-watch-layout">
-        <section className="watch-main">
-          <Typography.Title level={3} className="watch-section-title">
+      <div className="homeWatchLayout">
+        <section className="watchMain">
+          <Typography.Title level={2} className="watchSectionTitle">
             Now Playing
           </Typography.Title>
-          <Typography.Text className="watch-now-playing-text">
+          <Typography.Text className="watchNowPlayingText">
             {currentSong?.title || "Select a song"}
           </Typography.Text>
-          <div className="watch-stage">
+          <div className="watchStage">
             {currentSong?.videoId ? (
-              <div className="player-wrap watch-player-wrap">
+              <div className="playerWrap watchPlayerWrap">
                 <VideoPlayer videoId={currentSong.videoId} />
               </div>
             ) : (
-              <div className="watch-empty-state">
-                <Typography.Text className="watch-empty-text">
+              <div className="watchEmptyState">
+                <Typography.Text className="watchEmptyText">
                   No video selected
                 </Typography.Text>
               </div>
@@ -185,19 +178,19 @@ export default function Home() {
           </div>
         </section>
 
-        <aside className="watch-sidebar">
-          <Typography.Title level={3} className="watch-sidebar-title">
+        <aside className="watchSidebar">
+          <Typography.Title level={2} className="watchSidebarTitle">
             Up Next
           </Typography.Title>
 
           {queuedSongs.length ? (
-            <div className="queue-panel">
-              <div className="queue-panel-header">
-                <Typography.Text className="queue-panel-title">
+            <div className="queuePanel">
+              <div className="queuePanelHeader">
+                <Typography.Text className="queuePanelTitle">
                   Similarity queue
                 </Typography.Text>
                 <Button
-                  className="queue-panel-title"
+                  className="queuePanelTitle"
                   type="text"
                   size="small"
                   icon={<CloseOutlined />}
@@ -206,7 +199,7 @@ export default function Home() {
                   Clear
                 </Button>
               </div>
-              <div className="queue-chip-list">
+              <div className="queueChipList">
                 {queuedSongs.map((queuedSong) => (
                   <Tag
                     key={queuedSong.videoId}
@@ -216,7 +209,7 @@ export default function Home() {
                       event.preventDefault();
                       removeQueuedSong(queuedSong.videoId);
                     }}
-                    className="queue-chip"
+                    className="queueChip"
                   >
                     {queuedSong.channelTitle || queuedSong.title}
                   </Tag>

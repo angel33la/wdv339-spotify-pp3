@@ -99,13 +99,13 @@ export default function PlaylistDetails() {
   if (!playlist) return <Typography.Text>Loading...</Typography.Text>;
 
   return (
-    <div className="playlist-details-page">
+    <div className="playlistDetailsPage">
       {contextHolder}
-      <section className="playlist-details-header">
+      <section className="playlistDetailsHeader">
         {isEditing ? (
-          <form className="playlist-edit-form" onSubmit={handleSaveName}>
+          <form className="playlistEditForm" onSubmit={handleSaveName}>
             <Input
-              className="playlist-edit-input"
+              className="playlistEditInput"
               type="text"
               value={nameDraft}
               onChange={(e) => setNameDraft(e.target.value)}
@@ -114,7 +114,7 @@ export default function PlaylistDetails() {
             <Button
               type="primary"
               htmlType="submit"
-              className="playlist-action-save"
+              className="playlistActionSave"
               disabled={isSavingName}
               icon={<SaveOutlined />}
             >
@@ -123,7 +123,7 @@ export default function PlaylistDetails() {
             <Button
               type="button"
               danger
-              className="playlist-action-cancel"
+              className="playlistActionCancel"
               icon={<CloseOutlined />}
               onClick={() => {
                 setIsEditing(false);
@@ -134,19 +134,19 @@ export default function PlaylistDetails() {
             </Button>
           </form>
         ) : (
-          <Typography.Title level={1} className="playlists-title">
+          <Typography.Title level={1} className="playlistsTitle">
             {playlist.name}
           </Typography.Title>
         )}
-        <Typography.Text type="secondary" className="playlist-details-count">
+        <Typography.Text type="secondary" className="playlistDetailsCount">
           {playlist.songs.length} videos
         </Typography.Text>
         {error ? (
-          <Typography.Text type="danger" className="home-error">
+          <Typography.Text type="danger" className="homeError">
             {error}
           </Typography.Text>
         ) : null}
-        <div className="playlist-details-toolbar">
+        <div className="playlistDetailsToolbar">
           <Button
             type="primary"
             icon={isEditing ? <CheckOutlined /> : <EditOutlined />}
@@ -155,7 +155,7 @@ export default function PlaylistDetails() {
             {isEditing ? "Done Editing" : "Edit Playlist"}
           </Button>
           <Button
-            className="search-result-action search-result-open"
+            className="searchResultAction searchResultOpen"
             icon={<PlusOutlined />}
             onClick={() => navigate("/")}
           >
@@ -180,18 +180,18 @@ export default function PlaylistDetails() {
         </div>
       </section>
 
-      <section className="playlist-content">
-        <div className="playlist-player-section">
-          <Typography.Title level={2} className="playlist-player-title">
+      <section className="playlistContent">
+        <div className="playlistPlayerSection">
+          <Typography.Title level={2} className="playlistPlayerTitle">
             {currentSong?.title || "Select a video to play"}
           </Typography.Title>
-          <div className="playlist-mini-player">
+          <div className="playlistMiniPlayer">
             <VideoPlayer videoId={currentSong?.videoId} />
           </div>
         </div>
 
-        <div className="playlist-songs-section">
-          <Typography.Title level={2} className="playlist-songs-title">
+        <div className="playlistSongsSection">
+          <Typography.Title level={2} className="playlistSongsTitle">
             Songs in Playlist
           </Typography.Title>
           <SongList

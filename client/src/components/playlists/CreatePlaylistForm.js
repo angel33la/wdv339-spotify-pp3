@@ -20,14 +20,14 @@ export default function CreatePlaylistForm({ onCreate }) {
   };
 
   return (
-    <div className="create-playlist-container">
-      <div className="create-playlist-card">
-        <Typography.Title level={2} className="create-playlist-title">
+    <div className="createPlaylistContainer">
+      <div className="createPlaylistCard">
+        <Typography.Title level={2} className="createPlaylistTitle">
           Create New Playlist
         </Typography.Title>
-        <form className="create-playlist-form" onSubmit={handleSubmit}>
+        <form className="createPlaylistForm" onSubmit={handleSubmit}>
           <Input
-            className="create-playlist-input"
+            className="createPlaylistInput"
             type="text"
             placeholder="Enter playlist name"
             value={name}
@@ -39,7 +39,7 @@ export default function CreatePlaylistForm({ onCreate }) {
           <Button
             htmlType="submit"
             type="primary"
-            className="create-playlist-button"
+            className="createPlaylistButton"
             disabled={isLoading}
             icon={<PlusOutlined />}
           >

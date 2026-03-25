@@ -2,17 +2,48 @@ import axios from "axios";
 import { authHeaders, requestWithRefresh } from "./requestWithRefresh";
 
 const API = process.env.REACT_APP_API_URL;
+const PLAYLIST_CACHE_TTL_MS = 30_000;
+const inFlightPlaylistRequests = new Map();
+const playlistCache = new Map();
+
+const clearPlaylistCache = (token) => {
+  const requestKey = token || "";
+  playlistCache.delete(requestKey);
+  inFlightPlaylistRequests.delete(requestKey);
+};
 
 export const getPlaylists = async (token) => {
-  const res = await requestWithRefresh(
+  const requestKey = token || "";
+  const cachedPlaylists = playlistCache.get(requestKey);
+
+  if (
+    cachedPlaylists &&
+    Date.now() - cachedPlaylists.timestamp < PLAYLIST_CACHE_TTL_MS
+  ) {
+    return cachedPlaylists.data;
+  }
+
+  if (inFlightPlaylistRequests.has(requestKey)) {
+    return inFlightPlaylistRequests.get(requestKey);
+  }
+
+  const requestPromise = requestWithRefresh(
     (activeToken) =>
       axios.get(`${API}/api/playlists`, {
         headers: authHeaders(activeToken),
       }),
     token,
-  );
+  )
+    .then((res) => {
+      playlistCache.set(requestKey, { data: res.data, timestamp: Date.now() });
+      return res.data;
+    })
+    .finally(() => {
+      inFlightPlaylistRequests.delete(requestKey);
+    });
 
-  return res.data;
+  inFlightPlaylistRequests.set(requestKey, requestPromise);
+  return requestPromise;
 };
 
 export const getPlaylist = async (id, token) => {
@@ -40,6 +71,7 @@ export const createPlaylist = async (name, token) => {
     token,
   );
 
+  clearPlaylistCache(token);
   return res.data;
 };
 
@@ -56,6 +88,7 @@ export const updatePlaylistName = async (playlistId, name, token) => {
     token,
   );
 
+  clearPlaylistCache(token);
   return res.data;
 };
 
@@ -68,6 +101,7 @@ export const addSongToPlaylist = async (playlistId, song, token) => {
     token,
   );
 
+  clearPlaylistCache(token);
   return res.data;
 };
 
@@ -80,6 +114,7 @@ export const removeSongFromPlaylist = async (playlistId, songId, token) => {
     token,
   );
 
+  clearPlaylistCache(token);
   return res.data;
 };
 
@@ -92,5 +127,6 @@ export const deletePlaylist = async (playlistId, token) => {
     token,
   );
 
+  clearPlaylistCache(token);
   return res.data;
 };

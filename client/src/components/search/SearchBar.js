@@ -13,9 +13,9 @@ export default function SearchBar({ onSearch }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="search-bar">
+    <form onSubmit={handleSubmit} className="searchBar">
       <Input
-        className="search-bar-input"
+        className="searchBarInput"
         type="text"
         placeholder="Search artist or song"
         value={query}
@@ -25,7 +25,7 @@ export default function SearchBar({ onSearch }) {
       <Button
         type="primary"
         htmlType="submit"
-        className="search-bar-button"
+        className="searchBarButton"
         icon={<SearchOutlined />}
       >
         Search

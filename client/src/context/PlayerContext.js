@@ -26,7 +26,7 @@ export function PlayerProvider({ children }) {
         window.sessionStorage.removeItem(STORAGE_KEY);
       }
     } catch {
-      // Ignore session storage failures and keep player state in memory.
+      // Ignoring session storage failures and keep player state in memory.
     }
   }, [currentSong]);
 

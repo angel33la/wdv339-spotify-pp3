@@ -4,7 +4,7 @@ import { Typography } from "antd";
 export default function Login() {
   return (
     <div
-      className="home-page"
+      className="homePage"
       style={{
         minHeight: "100vh",
         display: "flex",
@@ -16,16 +16,18 @@ export default function Login() {
       }}
     >
       <img
-        src="/favicon.png"
-        alt="Music Matie logo"
+        src="/images/logo-120.png"
+        srcSet="/images/logo-120.png 1x, /images/logo-240.png 2x"
+        sizes="120px"
+        alt="Music/Search/Play App logo"
         style={{
           width: "120px",
           height: "120px",
           objectFit: "contain",
         }}
       />
-      <Typography.Title level={1} className="home-title">
-        Music Matie App
+      <Typography.Title level={1} className="homeTitle">
+        Music/Search/Play App
       </Typography.Title>
       <LoginButton />
     </div>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Select, Typography } from "antd";
+import { Button, Typography } from "antd";
 import {
   BookOutlined,
   CaretRightFilled,
@@ -48,10 +48,10 @@ export default function SearchResultCard({
   };
 
   return (
-    <article className="search-result-card">
+    <article className="searchResultCard">
       <button
         type="button"
-        className="search-result-play-trigger"
+        className="searchResultPlayTrigger"
         onClick={() => onPlay(song)}
         aria-label={`Play ${song.title}`}
       >
@@ -59,38 +59,43 @@ export default function SearchResultCard({
       </button>
 
       <img
-        className="search-result-thumb"
+        className="searchResultThumb"
         src={song.thumbnail}
         alt={song.title}
       />
 
-      <div className="search-result-copy">
-        <Typography.Title level={5} className="search-result-title">
+      <div className="searchResultCopy">
+        <Typography.Title level={5} className="searchResultTitle">
           {song.title}
         </Typography.Title>
-        <Typography.Text type="secondary" className="search-result-channel">
+        <Typography.Text type="secondary" className="searchResultChannel">
           {song.channelTitle}
         </Typography.Text>
       </div>
 
-      <div className="search-result-actions">
-        <div className="search-result-add-row">
-          <Select
-            className="search-result-select"
+      <div className="searchResultActions">
+        <div className="searchResultAddRow">
+          <select
+            className="searchResultSelect"
             value={selectedPlaylistId}
-            onChange={setSelectedPlaylistId}
+            onChange={(event) => setSelectedPlaylistId(event.target.value)}
             disabled={!playlists.length}
-            placeholder={!playlists.length ? "No playlists" : "Choose playlist"}
-            options={playlists.map((playlist) => ({
-              value: playlist._id,
-              label: playlist.name,
-            }))}
-          />
+            aria-label="Choose playlist"
+          >
+            <option value="" disabled>
+              {!playlists.length ? "No playlists" : "Choose playlist"}
+            </option>
+            {playlists.map((playlist) => (
+              <option key={playlist._id} value={playlist._id}>
+                {playlist.name}
+              </option>
+            ))}
+          </select>
 
           <Button
             type="primary"
             icon={<PlusOutlined />}
-            className="search-result-action"
+            className="searchResultAction"
             onClick={handleAddSelected}
             disabled={!selectedPlaylistId}
           >
@@ -98,10 +103,10 @@ export default function SearchResultCard({
           </Button>
         </div>
 
-        <div className="search-result-action-row">
+        <div className="searchResultActionRow">
           <Button
             icon={<FolderOpenOutlined />}
-            className="search-result-action search-result-open"
+            className="searchResultAction searchResultOpen"
             onClick={handleOpenSelected}
             disabled={!selectedPlaylistId}
           >
@@ -110,7 +115,7 @@ export default function SearchResultCard({
 
           <Button
             icon={<OrderedListOutlined />}
-            className="search-result-action"
+            className="searchResultAction"
             onClick={() => onQueue?.(song)}
           >
             Queue
@@ -118,7 +123,7 @@ export default function SearchResultCard({
 
           <Button
             icon={<BookOutlined />}
-            className="search-result-action"
+            className="searchResultAction"
             onClick={() => onSaveSong?.(song)}
           >
             Save

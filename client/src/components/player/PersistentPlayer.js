@@ -1,10 +1,6 @@
 import { useContext, useState } from "react";
 import { Button, Typography } from "antd";
-import {
-  DownOutlined,
-  RightOutlined,
-  CloseOutlined,
-} from "@ant-design/icons";
+import { DownOutlined, RightOutlined, CloseOutlined } from "@ant-design/icons";
 import { PlayerContext } from "../../context/PlayerContext";
 import VideoPlayer from "./VideoPlayer";
 
@@ -17,33 +13,33 @@ export default function PersistentPlayer() {
   }
 
   return (
-    <aside className={`persistent-player ${isExpanded ? "is-expanded" : ""}`}>
-      <div className="persistent-player-bar">
+    <aside className={`persistentPlayer ${isExpanded ? "isExpanded" : ""}`}>
+      <div className="persistentPlayerBar">
         <button
           type="button"
-          className="persistent-player-summary"
+          className="persistentPlayerSummary"
           onClick={() => setIsExpanded((previous) => !previous)}
           aria-expanded={isExpanded}
         >
           <img
-            className="persistent-player-thumb"
+            className="persistentPlayerThumb"
             src={currentSong.thumbnail}
             alt={currentSong.title}
           />
-          <div className="persistent-player-copy">
-            <Typography.Text className="persistent-player-label">
+          <div className="persistentPlayerCopy">
+            <Typography.Text className="persistentPlayerLabel">
               Now Playing
             </Typography.Text>
-            <Typography.Text className="persistent-player-title">
+            <Typography.Text className="persistentPlayerTitle">
               {currentSong.title}
             </Typography.Text>
-            <Typography.Text className="persistent-player-channel">
+            <Typography.Text className="persistentPlayerChannel">
               {currentSong.channelTitle}
             </Typography.Text>
           </div>
         </button>
 
-        <div className="persistent-player-actions">
+        <div className="persistentPlayerActions">
           <Button
             type="text"
             icon={isExpanded ? <DownOutlined /> : <RightOutlined />}
@@ -60,7 +56,7 @@ export default function PersistentPlayer() {
       </div>
 
       {isExpanded ? (
-        <div className="persistent-player-video">
+        <div className="persistentPlayerVideo">
           <VideoPlayer videoId={currentSong.videoId} />
         </div>
       ) : null}

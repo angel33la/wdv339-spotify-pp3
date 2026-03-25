@@ -4,18 +4,18 @@ import { DeleteOutlined, PlayCircleOutlined } from "@ant-design/icons";
 export default function SongList({ songs, onPlay, onRemove }) {
   if (!songs.length) {
     return (
-      <Typography.Paragraph className="playlist-empty-state">
+      <Typography.Paragraph className="playlistEmptyState">
         No videos in this playlist yet.
       </Typography.Paragraph>
     );
   }
 
   return (
-    <div className="playlist-songs-grid">
+    <div className="playlistSongsGrid">
       {songs.map((song) => (
-        <article key={song.videoId} className="playlist-song-card">
+        <article key={song.videoId} className="playlistSongCard">
           <img
-            className="playlist-song-thumb"
+            className="playlistSongThumb"
             src={song.thumbnail}
             alt={song.title}
           />
@@ -25,11 +25,11 @@ export default function SongList({ songs, onPlay, onRemove }) {
           <Typography.Text type="secondary">
             {song.channelTitle}
           </Typography.Text>
-          <div className="playlist-song-actions">
+          <div className="playlistSongActions">
             <Button
               type="primary"
               icon={<PlayCircleOutlined />}
-              className="search-result-action"
+              className="searchResultAction"
               onClick={() => onPlay(song)}
             >
               Play
@@ -38,7 +38,7 @@ export default function SongList({ songs, onPlay, onRemove }) {
               <Button
                 danger
                 icon={<DeleteOutlined />}
-                className="search-result-action playlist-delete-song-button"
+                className="searchResultAction playlistDeleteSongButton"
                 onClick={() => onRemove(song.videoId)}
               >
                 Delete Song

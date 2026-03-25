@@ -11,10 +11,9 @@ export default function PlaylistCard({ playlist, onDelete, isDeleting }) {
 
   return (
     <article
-      className="playlist-card"
+      className="playlistCard"
       role="button"
       tabIndex={0}
-      aria-label={`Open ${playlist.name} playlist`}
       onClick={handleOpen}
       onKeyDown={(event) => {
         if (event.key === "Enter" || event.key === " ") {
@@ -29,7 +28,7 @@ export default function PlaylistCard({ playlist, onDelete, isDeleting }) {
       <Typography.Text type="secondary">
         {playlist.songs.length} songs
       </Typography.Text>
-      <Typography.Text className="playlist-card-open">
+      <Typography.Text className="playlistCardOpen">
         Open playlist
       </Typography.Text>
 
@@ -48,7 +47,7 @@ export default function PlaylistCard({ playlist, onDelete, isDeleting }) {
         <Button
           danger
           icon={<DeleteOutlined />}
-          className="playlist-card-delete"
+          className="playlistCardDelete"
           loading={isDeleting}
           onClick={(event) => event.stopPropagation()}
         >

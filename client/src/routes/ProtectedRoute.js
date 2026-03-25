@@ -9,7 +9,7 @@ export default function ProtectedRoute({ children }) {
   if (loading) {
     return (
       <div
-        className="home-page"
+        className="homePage"
         style={{ minHeight: "60vh", justifyContent: "center" }}
       >
         <Spin size="large" />
