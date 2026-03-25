@@ -5,8 +5,59 @@
 # Project Overview
 ------
 
+<<<<<<< HEAD
 Music/Search/Play App Project for Project Portfolio 3 @ Full Sail University
 This project is a music search application that allows users to search for songs, artists, and albums using the [YouTube API](https://developers.google.com/youtube/v3). The app provides a user-friendly interface for exploring music and discovering new tracks. In a microservice structure using both a frontend and a backend, the frontend is built with React and the backend is built with Node.js and Express. The app also includes features such as user authentication (OAuth JSON web tokens), playlist creation, and music recommendations based on user preferences.
+=======
+Music/Search/Play App Project for Project Portfolio ||| @ Full Sail University
+This project is a full-stack music discovery application that lets signed-in users search for songs, artists, and albums using the [YouTube API](https://developers.google.com/youtube/v3). As well as play them in-app and organize picks into personal playlists. The app provides a user-friendly interface for exploring music and discovering new tracks. In a microservice structure using both a frontend and a backend. The frontend is a React single-page app and the backend is an Express API with Google OAuth, JWT-based auth, and MongoDB persistence.
+
+Music/Search/Play App Project for Project Portfolio 3 @ Full Sail University
+This project is a full-stack music discovery application that lets signed-in users search for songs, artists, and albums using the [YouTube API](https://developers.google.com/youtube/v3), play them in-app, and organize picks into personal playlists. The frontend is a React single-page app and the backend is an Express API with Google OAuth, JWT-based auth, and MongoDB persistence.
+
+## Who Is It For?
+------
+
+This project is ideal for:
+- Music enthusiasts looking for a personalized music discovery experience.
+- Developers interested in building full-stack applications with React and Express.
+- Anyone looking to integrate third-party APIs (like YouTube) into their projects.
+- Students and professionals seeking to enhance their skills in web development, API integration, and user authentication.
+
+## What It Does
+-------
+
+- Signs users in with Google OAuth and protects app routes with JWT-backed auth.
+- Searches YouTube music videos through a backend `/api/search` endpoint.
+- Plays selected videos in embedded YouTube iframes, including a persistent player.
+- Creates, renames, opens, and deletes user playlists stored in MongoDB.
+- Adds and removes songs inside playlists, with duplicate checks on the server.
+- Lets users queue songs for simple similarity-based result reordering.
+- Stores saved songs and display/preferences locally in browser storage.
+
+## How It Works
+-------
+
+**React client**: `App.js` wires protected routes for Home, Playlists, Songs, and Preferences; `AuthContext` loads the current user via `/api/auth/me`; `PlayerContext` keeps the active song in session storage. API wrappers call Express endpoints under `/api/auth`, `/api/search`, and `/api/playlists`, retrying once after `/api/auth/refresh` on 401.
+
+**Express server**: `server.js` registers auth, search, and playlist routes; auth controller handles Google OAuth callback, JWT issuance, refresh cookies, and `/me`; playlist controller persists playlists and song metadata in MongoDB via Mongoose.
+
+**External services/data flow**: Google OAuth authenticates users, YouTube Data API search returns video metadata, MongoDB stores users and playlists, and browser localStorage stores preferences and saved songs.
+
+## How To Run
+------
+
+- Create env files or variables. Repo evidence shows the app needs at least `REACT_APP_API_URL` on the *client* and `MONGO_URI`, `JWT_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_CALLBACK_URL`, and `YOUTUBE_API_KEY` on the *server*. `CLIENT_URL` and `JWT_REFRESH_SECRET` are optional fallbacks in code.
+- Install dependencies in both apps: run `npm install` in `client/` and `server/`.
+- Start the backend: run `npm start` in `server/` (or `npm run dev` for nodemon).
+- Start the frontend: run `npm start` in `client/`, then open `http://localhost:3000`.
+
+*Evidence basis*: README.md, client/src/*, server/server.js, server/src/routes/*, server/src/controllers/*, server/src/models/*, and server/src/utils/youtubeService.js.
+• Start the **frontend**: run `npm start` in `client/`, then open `http://localhost:3000`.
+
+*Evidence basis*: README.md, client/src/*, server/server.js, server/src/routes/*, server/src/controllers/*, server/src/models/*, and
+server/src/utils/youtubeService.js.
+>>>>>>> ca88b9a (feat: remove PDF summary generation and associated files from the project)
 
 ## Prerequisites
 ------
