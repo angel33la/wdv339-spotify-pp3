@@ -5,6 +5,8 @@
   "private": true,
   "scripts": {
     "dev": "concurrently \"npm run dev --prefix server\" \"npm start --prefix client\"",
+    "build": "npm run build --prefix client",
+    "vercel-build": "npm run build",
     "server": "npm run dev --prefix server",
     "client": "npm start --prefix client"
   },
