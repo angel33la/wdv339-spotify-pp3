@@ -107,3 +107,10 @@ Returns true if a valid JWT exists, otherwise false.
 * [Endpoint request a new JWT from YouTube using the authentication workflow](http://localhost:5000/youtube/v1/login)
 * [Endpoint for a generated/global search to YouTube.](http://localhost:5000/youtube/v1/search?q=QUERY&type=TYPE)
 Replace QUERY with the search term and TYPE with the type of search (e.g., track, artist, album). Returns JSON of all results.
+
+
+### 🚀Production
+-----
+The production version of this has my backend hosted on Render; my frontend is being deployed and hosted on Vercel. The links to the production version of the project are listed below:
+* [Client](https://wdv339-spotify-pp3-clean.vercel.app)
+* [Server](https://wdv339-spotify-pp3.onrender.com)
