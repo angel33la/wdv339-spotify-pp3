@@ -114,4 +114,3 @@ Replace QUERY with the search term and TYPE with the type of search (e.g., track
 The production version of this has my backend hosted on Render; my frontend is being deployed and hosted on Vercel. The links to the production version of the project are listed below:
 * [Client](https://wdv339-spotify-pp3-clean.vercel.app)
 * [Server](https://wdv339-spotify-pp3.onrender.com)
-
