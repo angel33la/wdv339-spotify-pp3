@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { ConfigProvider } from "antd";
+import { Analytics } from "@vercel/analytics/react";
 import App from "./App";
 import { AuthProvider } from "./context/AuthContext";
 import useGeekTheme from "./geekTheme";
@@ -18,6 +19,7 @@ function RootApp() {
       <AuthProvider>
         <App />
       </AuthProvider>
+      <Analytics />
     </ConfigProvider>
   );
 }
