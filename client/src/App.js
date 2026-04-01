@@ -1,5 +1,6 @@
 import { Suspense, lazy, useContext, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 import { AuthContext } from "./context/AuthContext";
 import { PlayerContext, PlayerProvider } from "./context/PlayerContext";
 import { PlaylistProvider } from "./context/PlaylistContext";
@@ -99,6 +100,7 @@ export default function App() {
           </main>
           <DeferredPersistentPlayer />
         </BrowserRouter>
+        <Analytics />
       </PlaylistProvider>
     </PlayerProvider>
   );
