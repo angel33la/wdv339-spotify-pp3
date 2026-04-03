@@ -8,6 +8,11 @@
 Music/Search/Play App Project for Project Portfolio 3 @ Full Sail University
 This project is a full-stack music discovery application that lets signed-in users search for songs, artists, and albums using the [YouTube API](https://developers.google.com/youtube/v3). As well as play them in-app and organize picks into personal playlists. The app provides a user-friendly interface for exploring music and discovering new tracks. In a microservice structure using both a frontend and a backend. The frontend is a React single-page app and the backend is an Express API with Google OAuth, JWT-based auth, and MongoDB persistence.
 
+## Live Demo
+------
+
+- App: [https://wdv339-spotify-pp3.onrender.com](https://wdv339-spotify-pp3.onrender.com)
+
 ## Who Is It For?
 ------
 
@@ -111,6 +116,6 @@ Replace QUERY with the search term and TYPE with the type of search (e.g., track
 
 ### 🚀Production
 -----
-The production version of this has my backend hosted on Render; my frontend is being deployed and hosted on Vercel. The links to the production version of the project are listed below:
-* [Client](https://wdv339-spotify-pp3-clean.vercel.app)
-* [Server](https://wdv339-spotify-pp3.onrender.com)
+The production version of this app is deployed on Render.
+
+* [Live App](https://wdv339-spotify-pp3.onrender.com)
