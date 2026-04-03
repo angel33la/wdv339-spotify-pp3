@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import morgan from "morgan";
 import passport from "passport";
+const path = require("path");
 import cookieParser from "cookie-parser";
 import "./config/passport.js";
 
@@ -13,6 +14,7 @@ import playlistRoutes from "./src/routes/playlist.route.js";
 
 dotenv.config();
 const app = express();
+
 
 connectDB();
 app.use(morgan("dev"));
@@ -36,11 +38,12 @@ app.use("/api/search", searchRoutes);
 app.use("/api/playlists", playlistRoutes);
 
 
-app.get("/", (req, res) => {
-  res.send("Welcome to the WDV339-SPOTIFY-PP3 APP Backend!");
+// Serve React frontend (CRA)
+const clientPath = path.join(__dirname, "../client/build");
+app.use(express.static(clientPath));
+
+app.get(/^\/(?!api).*/, (req, res) => {
+  res.sendFile(path.join(clientPath, "index.html"));
 });
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -3,17 +3,15 @@
   "version": "1.0.0",
   "description": "Full-stack music discovery app with YouTube integration",
   "private": true,
+  "main": "server/server.js",
   "scripts": {
     "dev": "concurrently \"npm run dev --prefix server\" \"npm start --prefix client\"",
-    "build": "npm run build --prefix client",
-    "vercel-build": "npm run build",
+    "build": "npm install --prefix client && npm install --prefix server && npm run build --prefix client",
+    "start": "node server/server.js",
     "server": "npm run dev --prefix server",
     "client": "npm start --prefix client"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
-  },
-  "dependencies": {
-    "@vercel/analytics": "^2.0.1"
   }
 }
