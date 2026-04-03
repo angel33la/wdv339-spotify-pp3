@@ -1,8 +1,9 @@
 import { GoogleOutlined } from "@ant-design/icons";
 import { Button } from "antd";
+import { getApiBaseUrl } from "../../utils/apiBaseUrl";
 
 export default function LoginButton() {
-  const api = process.env.REACT_APP_API_URL;
+  const api = getApiBaseUrl();
 
   return (
     <a href={`${api}/api/auth/google`}>

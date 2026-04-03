@@ -1,7 +1,8 @@
 import axios from "axios";
 import { getToken, setToken } from "../utils/token";
+import { getApiBaseUrl } from "../utils/apiBaseUrl";
 
-const API = process.env.REACT_APP_API_URL;
+const API = getApiBaseUrl();
 
 const refreshAccessToken = async () => {
   const response = await axios.post(

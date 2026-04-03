@@ -1,7 +1,8 @@
 import axios from "axios";
 import { authHeaders, requestWithRefresh } from "./requestWithRefresh";
+import { getApiBaseUrl } from "../utils/apiBaseUrl";
 
-const API = process.env.REACT_APP_API_URL;
+const API = getApiBaseUrl();
 const PROFILE_CACHE_TTL_MS = 30_000;
 const inFlightMeRequests = new Map();
 const profileCache = new Map();
