@@ -1,6 +1,7 @@
 # Music/Search/Play FullStack MERN App
 
 <a href='https://github.com/shivamkapasia0' target="_blank"><img alt='Github' src='https://img.shields.io/badge/FSU_2026-100000?style=for-the-badge&logo=Github&logoColor=ffffff&labelColor=000000&color=e55525'/></a>
+[![RoastMyCode: A](https://roastmycode.ai/badge/angel33la/wdv339-spotify-pp3)](https://roastmycode.ai/roast/latest/angel33la/wdv339-spotify-pp3)
 
 # Project Overview
 ------
